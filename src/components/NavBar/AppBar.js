@@ -1,4 +1,4 @@
-import React, { Component, KeyboardEvent } from 'react';
+import React from 'react';
 import './Appbar.css';
 import {
   AppBar,
@@ -6,34 +6,22 @@ import {
   Typography,
   List,
   ListItem,
-  Grid,
-  SwipeableDrawer,
-  TextField,
-  InputAdornment,
   Button,
   useMediaQuery,
-  Menu,
-  MenuItem,
   IconButton,
   Drawer,
   Divider,
-  Link as MLink,
+  ListItemText,
+  ListItemIcon,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-
 import MenuIcon from '@material-ui/icons/Menu';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
 import ForumIcon from '@material-ui/icons/Forum';
-
 import TimelineIcon from '@material-ui/icons/Timeline';
 import EventIcon from '@material-ui/icons/Event';
-
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,9 +95,7 @@ const useStyles = makeStyles((theme) => ({
 const Appbar = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const preventDefault = (event) => event.preventDefault();
+
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const isTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -243,10 +229,10 @@ const Appbar = () => {
                 size='small'
                 component={NavLink}
                 to='/register'
-                // style={{
-                //   textDecoration: 'none',
-                //   color: 'inherit',
-                // }}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
                 className={classes.button}
                 startIcon={<PersonAddIcon />}
                 disableFocusRipple
@@ -302,10 +288,11 @@ const Appbar = () => {
           ) : (
             <div className={classes.headerButtons}>
               {ItemList.map((item, index) => {
-                const { text, icon, url } = item;
+                const { text, url } = item;
 
                 return (
                   <NavLink
+                    key={text}
                     to={url}
                     className='headerButton'
                     activeClassName={classes.activeLink}
@@ -347,8 +334,6 @@ const Appbar = () => {
                 }}
                 className={classes.button}
                 startIcon={<PersonAddIcon />}
-                disableFocusRipple
-                disableRipple
               >
                 register
               </Button>

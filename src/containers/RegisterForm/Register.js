@@ -46,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     padding: theme.spacing(2),
   },
-  errorMessage: {
-    color: 'red',
-  },
   errorUsername: {
     color: 'red',
     display: 'flex',
@@ -56,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   formControl: {
-    margin: theme.spacing(1),
+    maxHeight: 70,
     minWidth: 120,
   },
   link: {
@@ -220,7 +217,7 @@ const SignUp = () => {
                 name='repassword'
                 label='Repeat password'
                 type='password'
-                id='password'
+                id='repassword'
                 autoComplete='current-password'
                 error={errors.repassword ? true : false}
               />

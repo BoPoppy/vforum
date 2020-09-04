@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  const newstate = state;
+  var newstate = state;
   switch (action.type) {
     case LOADING.SHOW_LOADING:
       newstate = true;

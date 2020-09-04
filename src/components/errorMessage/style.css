@@ -1,7 +1,7 @@
 .error-message {
   color: #cc0033;
   display: inline-block;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 15px;
-  margin: 5px 0 0;
+  padding-top: 5px;
 }

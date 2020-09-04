@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '../../components/errorMessage';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,14 +30,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  errorMessage: {
-    color: 'red',
-  },
 }));
 
 export default function SignIn() {
   const classes = useStyles();
-  const { register, handleSubmit, control, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -71,9 +69,7 @@ export default function SignIn() {
             autoFocus
             error={errors.email ? true : false}
           />
-          {errors.email && (
-            <div className={classes.errorMessage}>{errors.email.message}</div>
-          )}
+          {errors.email && <ErrorMessage text={errors.email.message} />}
           <TextField
             variant='outlined'
             margin='normal'
@@ -92,11 +88,7 @@ export default function SignIn() {
             autoComplete='current-password'
             error={errors.password ? true : false}
           />
-          {errors.password && (
-            <div className={classes.errorMessage}>
-              {errors.password.message}
-            </div>
-          )}
+          {errors.password && <ErrorMessage text={errors.password.message} />}
 
           <Button
             type='submit'
