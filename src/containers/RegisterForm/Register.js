@@ -6,7 +6,6 @@ import {
   FormControl,
   InputLabel,
   Button,
-  FormHelperText,
   Avatar,
   CssBaseline,
   TextField,
@@ -24,6 +23,7 @@ import { useForm, Controller } from 'react-hook-form';
 import InfoIcon from '@material-ui/icons/Info';
 import { connect } from 'react-redux';
 import { registerRequest } from '../../actions';
+import ErrorMessage from '../../components/errorMessage';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -124,7 +124,7 @@ const SignUp = () => {
               />
               {errors.display_name && (
                 <div className={classes.errorUsername}>
-                  {errors.display_name.message}
+                  <ErrorMessage text={errors.display_name.message} />
 
                   <IconButton
                     aria-describedby={id}
@@ -184,11 +184,7 @@ const SignUp = () => {
                 error={errors.email ? true : false}
               />
 
-              {errors.email && (
-                <div className={classes.errorMessage}>
-                  {errors.email.message}
-                </div>
-              )}
+              {errors.email && <ErrorMessage text={errors.email.message} />}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -209,9 +205,7 @@ const SignUp = () => {
                 error={errors.password ? true : false}
               />
               {errors.password && (
-                <div className={classes.errorMessage}>
-                  {errors.password.message}
-                </div>
+                <ErrorMessage text={errors.password.message} />
               )}
             </Grid>
             <Grid item xs={12}>
@@ -231,9 +225,7 @@ const SignUp = () => {
                 error={errors.repassword ? true : false}
               />
               {errors.repassword && (
-                <div className={classes.errorMessage}>
-                  {errors.repassword.message}
-                </div>
+                <ErrorMessage text={errors.repassword.message} />
               )}
             </Grid>
             <Grid item xs={12}>
@@ -254,13 +246,11 @@ const SignUp = () => {
                     </Select>
                   }
                   name='gender'
-                  rules={{ required: 'required' }}
+                  rules={{ required: 'Required' }}
                   control={control}
                   defaultValue=''
                 />
-                <FormHelperText>
-                  {errors.gender && errors.gender.message}
-                </FormHelperText>
+                {errors.gender && <ErrorMessage text={errors.gender.message} />}
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -276,9 +266,9 @@ const SignUp = () => {
                   }
                   label='I agree to the terms of service, privacy policy and cookie policy.'
                 />
-                <FormHelperText>
-                  {errors.checkbox && errors.checkbox.message}
-                </FormHelperText>
+                {errors.checkbox && (
+                  <ErrorMessage text={errors.checkbox.message} />
+                )}
               </FormControl>
             </Grid>
           </Grid>
