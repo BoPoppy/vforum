@@ -9,6 +9,7 @@ import {
 } from '../actions';
 
 function* callSubmit({ email, password, display_name, gender }) {
+  console.log('sagaRegister', email, password, display_name, gender);
   yield put(showLoading());
   const res = yield call(registerUser, {
     email,

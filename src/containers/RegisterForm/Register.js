@@ -79,7 +79,7 @@ const SignUp = (props) => {
 
   const SubmitData = (data) => {
     const { email, display_name, password, gender } = data;
-    registerRequest({ email, display_name, password, gender });
+    registerRequest(email, password, display_name, gender);
     console.log({ email, display_name, password, gender });
   };
 
@@ -295,7 +295,8 @@ const SignUp = (props) => {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  registerRequest: () => dispatch(registerRequest()),
+  registerRequest: (email, password, display_name, gender) =>
+    dispatch(registerRequest(email, password, display_name, gender)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
