@@ -1,6 +1,6 @@
 import axiosService from '../common/axiosService';
 
-const REACT_APP_API_URL = 'https://git.heroku.com/vforum.git';
+const REACT_APP_API_URL = 'https://localhost:4000';
 
 const registerUser = (data) => {
   console.log('call register api', data);
