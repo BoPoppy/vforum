@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 function GlobalLoading(props) {
   const classes = useStyles();
-  const { showLoading } = props;
+  const { isLoading } = props;
   let xhtml = null;
-  if (showLoading) {
+  if (isLoading) {
     xhtml = (
       <div className={classes.globalLoading}>
         <img src={LoadingIcon} alt='loading' className={classes.icon} />

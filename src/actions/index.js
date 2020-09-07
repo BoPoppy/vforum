@@ -14,21 +14,20 @@ const setError = (error) => ({
   error,
 });
 
-const registerRequest = () => ({
+const registerRequest = (email, password, display_name, gender) => ({
   type: REGISTER.REQUEST,
-});
-
-const registerSuccess = (email, password, display_name, gender) => ({
-  type: REGISTER.REQUEST_SUCCESS,
   email,
   password,
   display_name,
   gender,
 });
 
-const registerFail = (error) => ({
+const registerSuccess = () => ({
+  type: REGISTER.REQUEST_SUCCESS,
+});
+
+const registerFail = () => ({
   type: REGISTER.REQUEST_FAIL,
-  error,
 });
 
 const showLoading = () => ({

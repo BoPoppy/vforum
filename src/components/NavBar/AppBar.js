@@ -25,11 +25,14 @@ import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    backgroundColor: '#2E3B55',
+    '&:hover': {
+      backgroundColor: '#2E3B55',
+    },
   },
   appBar: {
-    backgroundColor: '#2E3B55',
     color: 'white',
+    backgroundColor: '#2E3B55',
     boxShadow: '0px 0px 0px 0px',
     [theme.breakpoints.up('lg')]: {
       paddingLeft: 200,
@@ -50,10 +53,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     fontSize: 11,
   },
-  search: {},
-  input: {
-    color: 'white',
-  },
+
   list: {
     [theme.breakpoints.down('xs')]: {
       width: 200,
@@ -61,14 +61,6 @@ const useStyles = makeStyles((theme) => ({
     [[theme.breakpoints.up('md')]]: {
       display: 'flex',
     },
-  },
-  fullList: {
-    width: 'auto',
-  },
-
-  sideBarIcon: {
-    color: 'white',
-    cursor: 'pointer',
   },
   headerButtons: {
     display: 'flex',
@@ -86,10 +78,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
   },
-  activeLink: {
-    fontWeight: 'bold',
-    color: 'red',
-  },
+  activeLink: {},
 }));
 
 const Appbar = () => {
@@ -295,7 +284,7 @@ const Appbar = () => {
                     key={text}
                     to={url}
                     className='headerButton'
-                    activeClassName={classes.activeLink}
+                    activeClassName='activeLink'
                   >
                     {text}
                   </NavLink>

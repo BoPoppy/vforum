@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const { registerRequest } = props;
   const classes = useStyles();
   const { register, handleSubmit, control, errors, watch } = useForm();
   const password = useRef({});
@@ -79,7 +80,7 @@ const SignUp = () => {
   const SubmitData = (data) => {
     const { email, display_name, password, gender } = data;
     registerRequest({ email, display_name, password, gender });
-    console.log(email, display_name, password, gender);
+    console.log({ email, display_name, password, gender });
   };
 
   const open = Boolean(anchorEl);

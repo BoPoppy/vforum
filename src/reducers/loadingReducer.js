@@ -1,8 +1,6 @@
 import { LOADING } from '../constants';
 
-const initialState = {
-  showLoading: false,
-};
+const initialState = false;
 
 const reducer = (state = initialState, action) => {
   var newstate = state;

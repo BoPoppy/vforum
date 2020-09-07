@@ -1,12 +1,26 @@
-// import { takeEvery, put, select, call } from 'redux-saga/effects';
+import { takeEvery, put, call } from 'redux-saga/effects';
 
-// import { LOGIN } from '../constants';
-// import { fetchLogin } from '../api/index';
+import { LOGIN } from '../constants';
+import { loginUser } from '../apis';
+import { setId, setError, showLoading, hideLoading } from '../actions/index';
 
-// import { setLogin, setError } from '../actions/index';
+function* callSubmit({ email, password }) {
+  yield put(showLoading());
+  const res = yield call(loginUser, {
+    email,
+    password,
+  });
+  const { status } = res;
+  if (status === true) {
+    yield put(setId());
+  } else {
+    yield put(setError());
+  }
+  yield put(hideLoading());
+}
 
-// function* handleLoginLoad() {}
+function* submitLoginSaga() {
+  yield takeEvery(LOGIN.LOAD, callSubmit);
+}
 
-// export default function* watchImagesLoad() {
-//   yield takeEvery(LOGIN.LOAD, handleLoginLoad);
-// }
+export default submitLoginSaga;

@@ -11,6 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../components/errorMessage';
+import { connect } from 'react-redux';
+import { loadId } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,9 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn(props) {
   const classes = useStyles();
+  const { loadId } = props;
   const { register, handleSubmit, errors } = useForm();
+
+  const SubmitData = (data) => {
+    loadId(data);
+    console.log(data);
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -49,7 +57,7 @@ export default function SignIn() {
         <form
           className={classes.form}
           noValidate
-          onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
+          onSubmit={handleSubmit(SubmitData)}
         >
           <TextField
             variant='outlined'
@@ -112,3 +120,11 @@ export default function SignIn() {
     </Container>
   );
 }
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadId: () => dispatch(loadId()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

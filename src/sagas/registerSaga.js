@@ -1,21 +1,28 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { REGISTER } from '../constants';
 import { registerUser } from '../apis';
-import { registerSuccess, registerFail } from '../actions';
+import {
+  registerSuccess,
+  registerFail,
+  showLoading,
+  hideLoading,
+} from '../actions';
 
 function* callSubmit({ email, password, display_name, gender }) {
+  yield put(showLoading());
   const res = yield call(registerUser, {
     email,
     password,
     display_name,
     gender,
   });
-  const { data, status } = res;
-  if (status === 201) {
-    yield put(registerSuccess(data));
+  const { status } = res;
+  if (status === true) {
+    yield put(registerSuccess());
   } else {
-    yield put(registerFail(data));
+    yield put(registerFail());
   }
+  yield put(hideLoading());
 }
 
 function* submitSaga() {
