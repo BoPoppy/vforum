@@ -21,6 +21,7 @@ function* callSubmit({ email, password, display_name, gender }) {
   if (status === true) {
     yield put(registerSuccess());
   } else {
+    console.log('Email is existed');
     yield put(registerFail());
   }
   yield put(hideLoading());

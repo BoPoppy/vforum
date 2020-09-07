@@ -40,8 +40,9 @@ function SignIn(props) {
   const { register, handleSubmit, errors } = useForm();
 
   const SubmitData = (data) => {
-    loadId(data);
-    console.log(data);
+    const { email, password } = data;
+    loadId(email, password);
+    console.log('login', email, password);
   };
 
   return (
@@ -124,7 +125,7 @@ function SignIn(props) {
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  loadId: () => dispatch(loadId()),
+  loadId: (email, password) => dispatch(loadId(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

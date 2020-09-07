@@ -1,7 +1,9 @@
 import { LOGIN, REGISTER, LOADING } from '../constants';
 
-const loadId = () => ({
+const loadId = (email, password) => ({
   type: LOGIN.LOAD,
+  email,
+  password,
 });
 
 const setId = (id) => ({
