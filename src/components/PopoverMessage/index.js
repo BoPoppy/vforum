@@ -70,7 +70,6 @@ function PopoverMessage(props) {
       </div>
     );
   }
-  console.log(xhtml);
   return xhtml;
 }
 const mapStateToProps = ({ showMessage }) => ({

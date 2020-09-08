@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 function GlobalLoading(props) {
   const classes = useStyles();
   const { isLoading } = props;
-  console.log(isLoading);
   let xhtml = null;
   if (isLoading) {
     xhtml = (
