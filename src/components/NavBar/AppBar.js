@@ -24,12 +24,6 @@ import EventIcon from '@material-ui/icons/Event';
 import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: '#2E3B55',
-    '&:hover': {
-      backgroundColor: '#2E3B55',
-    },
-  },
   appBar: {
     color: 'white',
     backgroundColor: '#2E3B55',
@@ -78,7 +72,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
   },
-  activeLink: {},
+  activelink: {
+    fontweight: 'bold',
+    color: 'red',
+  },
 }));
 
 const Appbar = () => {
@@ -105,12 +102,12 @@ const Appbar = () => {
   const ItemList = [
     {
       text: 'Vforum',
-      url: '/vforum',
+      url: 'vforum',
       icon: <ForumIcon />,
     },
     {
       text: 'Vmemory',
-      url: '/vmemory',
+      url: 'vmemory',
       icon: <TimelineIcon />,
     },
     {
@@ -154,6 +151,7 @@ const Appbar = () => {
 
                     return (
                       <ListItem
+                        key={text}
                         button
                         component={NavLink}
                         to={url}
@@ -260,6 +258,7 @@ const Appbar = () => {
 
                     return (
                       <ListItem
+                        key={text}
                         button
                         component={NavLink}
                         to={url}
@@ -276,16 +275,11 @@ const Appbar = () => {
             </div>
           ) : (
             <div className={classes.headerButtons}>
-              {ItemList.map((item, index) => {
+              {ItemList.map((item) => {
                 const { text, url } = item;
 
                 return (
-                  <NavLink
-                    key={text}
-                    to={url}
-                    className='headerButton'
-                    activeClassName='activeLink'
-                  >
+                  <NavLink key={text} to={`/${url}`} className='headerButton'>
                     {text}
                   </NavLink>
                 );

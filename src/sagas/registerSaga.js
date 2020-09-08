@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, delay } from 'redux-saga/effects';
 import { REGISTER } from '../constants';
 import { registerUser } from '../apis';
 import {
@@ -12,19 +12,21 @@ import {
 function* callSubmit({ email, password, display_name, gender }) {
   console.log('sagaRegister', email, password, display_name, gender);
   yield put(showLoading());
+  delay(5000);
   const res = yield call(registerUser, {
     email,
     password,
     display_name,
     gender,
   });
-  const { data } = res.data;
-  if (data === true) {
+  const { data } = res;
+  console.log(data);
+  if (data.id) {
     yield put(registerSuccess());
     yield put(showMessage(1, 'Registered successfully'));
   } else {
     yield put(registerFail());
-    yield put(showMessage(3, 'The email is already taken'));
+    yield put(showMessage(3, data.Error));
   }
   yield put(hideLoading());
 }

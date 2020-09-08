@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Backdrop, Fade } from '@material-ui/core';
-
 import { connect } from 'react-redux';
 import Message from './Message';
 import { hideMessage } from '../../actions';
@@ -33,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PopoverMessage(props) {
   const { showMessage, hideMessage } = props;
+  const { data } = showMessage;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
@@ -40,8 +40,12 @@ function PopoverMessage(props) {
     setOpen(false);
   };
 
+  useEffect(() => {
+    setOpen(true);
+  }, [data.status]);
+
   let xhtml = null;
-  if (showMessage.status) {
+  if (data.status) {
     xhtml = (
       <div>
         <Modal
@@ -57,8 +61,8 @@ function PopoverMessage(props) {
         >
           <Fade in={open}>
             <Message
-              type={showMessage.messageType}
-              message={showMessage.message}
+              type={data.messageType}
+              message={data.message}
               onClosePanel={handleClose}
             />
           </Fade>
@@ -66,6 +70,7 @@ function PopoverMessage(props) {
       </div>
     );
   }
+  console.log(xhtml);
   return xhtml;
 }
 const mapStateToProps = ({ showMessage }) => ({
