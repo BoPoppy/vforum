@@ -11,14 +11,14 @@ function* callSubmit({ email, password }) {
     email,
     password,
   });
-  const { status } = res;
-  if (status === 1) {
+  const { data } = res.data;
+  if (data === 1) {
     console.log('login successful');
     yield put(setId());
-  } else if (status === 2) {
+  } else if (data === 2) {
     console.log('incorrect password');
     yield put(setError());
-  } else if (status === 3) {
+  } else if (data === 3) {
     console.log('incorrect email');
     yield put(setError());
   }

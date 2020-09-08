@@ -6,6 +6,7 @@ import {
   registerFail,
   showLoading,
   hideLoading,
+  showMessage,
 } from '../actions';
 
 function* callSubmit({ email, password, display_name, gender }) {
@@ -17,12 +18,13 @@ function* callSubmit({ email, password, display_name, gender }) {
     display_name,
     gender,
   });
-  const { status } = res;
-  if (status === true) {
+  const { data } = res.data;
+  if (data === true) {
     yield put(registerSuccess());
+    yield put(showMessage(1, 'Registered successfully'));
   } else {
-    console.log('Email is existed');
     yield put(registerFail());
+    yield put(showMessage(3, 'The email is already taken'));
   }
   yield put(hideLoading());
 }

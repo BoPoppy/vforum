@@ -1,4 +1,4 @@
-import { LOGIN, REGISTER, LOADING } from '../constants';
+import { LOGIN, REGISTER, LOADING, MESSAGE } from '../constants';
 
 const loadId = (email, password) => ({
   type: LOGIN.LOAD,
@@ -6,14 +6,12 @@ const loadId = (email, password) => ({
   password,
 });
 
-const setId = (id) => ({
+const setId = () => ({
   type: LOGIN.LOAD_SUCCESS,
-  id,
 });
 
-const setError = (error) => ({
+const setError = () => ({
   type: LOGIN.LOAD_FAIL,
-  error,
 });
 
 const registerRequest = (email, password, display_name, gender) => ({
@@ -40,6 +38,16 @@ const hideLoading = () => ({
   type: LOADING.HIDE_LOADING,
 });
 
+const showMessage = (messageType, message) => ({
+  type: MESSAGE.SHOW_MESSAGE,
+  messageType,
+  message,
+});
+
+const hideMessage = () => ({
+  type: MESSAGE.HIDE_MESSAGE,
+});
+
 export {
   loadId,
   setId,
@@ -49,4 +57,6 @@ export {
   registerRequest,
   showLoading,
   hideLoading,
+  showMessage,
+  hideMessage,
 };

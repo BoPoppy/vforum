@@ -12,6 +12,7 @@ import LoginForm from './containers/loginForm/LoginForm';
 import EventPage from './containers/EventPage/EventPage';
 import Register from './containers/RegisterForm/Register';
 import GlobalLoading from './components/GlobalLoading';
+import PopoverMessage from './components/PopoverMessage';
 
 const useStyles = makeStyles({});
 
@@ -22,6 +23,7 @@ function App() {
       <StylesProvider injectFirst>
         <GlobalLoading />
         <AppBar />
+        <PopoverMessage />
         <Switch>
           <Route exact path='/' component={Homescreen} />
           <Route path='/vforum' component={Vforum} />
