@@ -9,13 +9,12 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  var newstate = state;
   switch (action.type) {
     case MESSAGE.SHOW_MESSAGE:
       return {
-        ...newstate,
+        ...state,
         data: {
-          ...newstate.data,
+          ...state.data,
           messageType: action.messageType,
           message: action.message,
           status: true,
@@ -23,16 +22,16 @@ const reducer = (state = initialState, action) => {
       };
     case MESSAGE.HIDE_MESSAGE:
       return {
-        ...newstate,
+        ...state,
         data: {
-          ...newstate.data,
+          ...state.data,
           messageType: 0,
           message: '',
           status: false,
         },
       };
     default:
-      return newstate;
+      return state;
   }
 };
 

@@ -20,8 +20,13 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import MenuIcon from '@material-ui/icons/Menu';
 import ForumIcon from '@material-ui/icons/Forum';
 import TimelineIcon from '@material-ui/icons/Timeline';
+import SettingsIcon from '@material-ui/icons/Settings';
 import EventIcon from '@material-ui/icons/Event';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from 'react-router-dom';
+import { getAuthToken } from '../../common/auth';
+import { logOut } from '../../actions';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -78,7 +83,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Appbar = () => {
+const Appbar = (props) => {
+  const { logOut } = props;
+  const data = getAuthToken('storage');
   const classes = useStyles();
   const theme = useTheme();
 
@@ -168,27 +175,32 @@ const Appbar = () => {
                   <ListItem
                     button
                     component={NavLink}
-                    to='/login'
+                    to={data ? '/settings' : '/login'}
                     className={classes.link}
                     activeClassName={classes.activeLink}
                   >
                     <ListItemIcon>
                       <AccountBoxIcon />
                     </ListItemIcon>
-                    <ListItemText primary='Login'></ListItemText>
+                    <ListItemText
+                      primary={data ? 'settings' : 'Login'}
+                    ></ListItemText>
                   </ListItem>
 
                   <ListItem
                     button
                     component={NavLink}
-                    to='/register'
+                    to={data ? '/login' : '/register'}
                     className={classes.link}
+                    onClick={data ? logOut : null}
                     activeClassName={classes.activeLink}
                   >
                     <ListItemIcon>
                       <PersonAddIcon />
                     </ListItemIcon>
-                    <ListItemText primary='Register'></ListItemText>
+                    <ListItemText
+                      primary={data ? 'logout' : 'Register'}
+                    ></ListItemText>
                   </ListItem>
                 </List>
               </Drawer>
@@ -200,32 +212,31 @@ const Appbar = () => {
                 color='secondary'
                 size='small'
                 component={NavLink}
-                to={'/login'}
-                className={classes.button}
+                to={data ? '/settings' : '/login'}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
-                startIcon={<AccountBoxIcon />}
+                className={classes.button}
+                startIcon={data ? <SettingsIcon /> : <AccountBoxIcon />}
               >
-                login
+                {data ? 'Setting' : 'login'}
               </Button>
               <Button
                 variant='contained'
                 color='secondary'
                 size='small'
                 component={NavLink}
-                to='/register'
+                to={data ? '/login' : '/register'}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
+                onClick={data ? logOut : null}
                 className={classes.button}
-                startIcon={<PersonAddIcon />}
-                disableFocusRipple
-                disableRipple
+                startIcon={data ? <ExitToAppIcon /> : <PersonAddIcon />}
               >
-                Register
+                {data ? 'Logout' : 'register'}
               </Button>
               <Divider
                 orientation='vertical'
@@ -295,30 +306,31 @@ const Appbar = () => {
                 color='secondary'
                 size='small'
                 component={NavLink}
-                to={'/login'}
+                to={data ? '/settings' : '/login'}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
                 className={classes.button}
-                startIcon={<AccountBoxIcon />}
+                startIcon={data ? <SettingsIcon /> : <AccountBoxIcon />}
               >
-                login
+                {data ? 'Setting' : 'login'}
               </Button>
               <Button
                 variant='contained'
                 color='secondary'
                 size='small'
                 component={NavLink}
-                to='/register'
+                to={data ? '/login' : '/register'}
                 style={{
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
+                onClick={data ? logOut : null}
                 className={classes.button}
-                startIcon={<PersonAddIcon />}
+                startIcon={data ? <ExitToAppIcon /> : <PersonAddIcon />}
               >
-                register
+                {data ? 'Logout' : 'register'}
               </Button>
             </div>
           )}
@@ -328,4 +340,13 @@ const Appbar = () => {
   );
 };
 
-export default Appbar;
+const mapStateToProps = ({ loginReducer, logOut }) => ({
+  loginReducer,
+  logOut,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logOut: () => dispatch(logOut()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Appbar);

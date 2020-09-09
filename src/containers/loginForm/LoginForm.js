@@ -85,8 +85,8 @@ function SignIn(props) {
             inputRef={register({
               required: 'Required',
               minLength: {
-                value: 6,
-                message: 'The password must be longer than 6 characters',
+                value: 8,
+                message: 'The password must be longer than 8 characters',
               },
             })}
             fullWidth

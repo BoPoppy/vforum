@@ -9,6 +9,7 @@ import {
   hideLoading,
   showMessage,
 } from '../actions/index';
+import { setAuthToken } from '../common/auth';
 
 function* callSubmit({ email, password }) {
   console.log('sagaLogin', email, password);
@@ -26,6 +27,7 @@ function* callSubmit({ email, password }) {
     yield put(setError());
     yield put(showMessage(3, data.Error));
   } else {
+    yield setAuthToken({ id: data.id, token: data.token });
     yield put(setId());
     yield put(showMessage(2, data.message));
   }

@@ -13,6 +13,7 @@ import EventPage from './containers/EventPage/EventPage';
 import Register from './containers/RegisterForm/Register';
 import GlobalLoading from './components/GlobalLoading';
 import PopoverMessage from './components/PopoverMessage';
+import PrivateRoute from './common/PrivateRoute';
 
 const useStyles = makeStyles({});
 
@@ -25,12 +26,12 @@ function App() {
         <AppBar />
         <PopoverMessage />
         <Switch>
-          <Route exact path='/' component={Homescreen} />
-          <Route path='/vforum' component={Vforum} />
+          <PrivateRoute exact path='/' component={Homescreen} />
+          <PrivateRoute path='/vforum' component={Vforum} />
           <Route path='/login' component={LoginForm} />
           <Route path='/register' component={Register} />
-          <Route path='/event' component={EventPage} />
-          <Route path='/vmemory' component={Vmemory} />
+          <PrivateRoute path='/event' component={EventPage} />
+          <PrivateRoute path='/vmemory' component={Vmemory} />
         </Switch>
       </StylesProvider>
     </div>

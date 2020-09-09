@@ -1,4 +1,4 @@
-import { LOGIN, REGISTER, LOADING, MESSAGE } from '../constants';
+import { LOGIN, REGISTER, LOADING, MESSAGE, LOGOUT } from '../constants';
 
 const loadId = (email, password) => ({
   type: LOGIN.LOAD,
@@ -48,6 +48,10 @@ const hideMessage = () => ({
   type: MESSAGE.HIDE_MESSAGE,
 });
 
+const logOut = () => ({
+  type: LOGOUT.SUBMIT,
+});
+
 export {
   loadId,
   setId,
@@ -59,4 +63,5 @@ export {
   hideLoading,
   showMessage,
   hideMessage,
+  logOut,
 };
