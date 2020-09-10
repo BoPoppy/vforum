@@ -22,12 +22,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     textAlign: 'center',
   },
-  icon: {
-    width: 100,
-    [theme.breakpoints.down('xs')]: {
-      width: 100,
-    },
-  },
 }));
 
 function PopoverMessage(props) {

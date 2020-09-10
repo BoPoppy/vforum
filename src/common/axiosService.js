@@ -14,12 +14,16 @@ class axiosService {
     return Promise.reject(error);
   }
 
-  get(url) {
-    return this.instance.get(url);
+  get(url, headers) {
+    return this.instance.get(url, headers);
   }
 
   post(url, body) {
     return this.instance.post(url, body);
+  }
+
+  patch(url, body, headers) {
+    return this.instance.patch(url, body, headers);
   }
 }
 

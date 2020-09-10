@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 function PrivateRoute({ component: Component, ...rest }) {
   const data = localStorage.getItem('storage');
-  console.log(data);
+
   return (
     <Route
       {...rest}

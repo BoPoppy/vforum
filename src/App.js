@@ -14,6 +14,7 @@ import Register from './containers/RegisterForm/Register';
 import GlobalLoading from './components/GlobalLoading';
 import PopoverMessage from './components/PopoverMessage';
 import PrivateRoute from './common/PrivateRoute';
+import Settings from './containers/Settings';
 
 const useStyles = makeStyles({});
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/login' component={LoginForm} />
           <Route path='/register' component={Register} />
           <PrivateRoute path='/event' component={EventPage} />
+          <PrivateRoute path='/settings' component={Settings} />
           <PrivateRoute path='/vmemory' component={Vmemory} />
         </Switch>
       </StylesProvider>

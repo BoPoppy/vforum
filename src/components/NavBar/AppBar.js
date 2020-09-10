@@ -25,7 +25,7 @@ import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from 'react-router-dom';
 import { getAuthToken } from '../../common/auth';
-import { logOut } from '../../actions';
+import { logOut, requestInfo } from '../../actions';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -158,7 +158,7 @@ const Appbar = (props) => {
 
                     return (
                       <ListItem
-                        key={text}
+                        key={index}
                         button
                         component={NavLink}
                         to={url}

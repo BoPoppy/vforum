@@ -4,6 +4,8 @@ import loadingReducer from './loadingReducer';
 import loginReducer from './loginReducer';
 import popoverMessageReducer from './popoverMessageReducer';
 import logOutReducer from './logOutReducer';
+import userInfoReducer from './userInfoReducer';
+import changePasswordRequest from './changePasswordReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
   loginReducer,
   showMessage: popoverMessageReducer,
   logOut: logOutReducer,
+  userInfo: userInfoReducer,
+  changePassword: changePasswordRequest,
 });
 
 export default rootReducer;

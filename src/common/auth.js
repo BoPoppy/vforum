@@ -10,4 +10,15 @@ function removeAuthToken() {
   localStorage.removeItem('storage');
 }
 
-export { getAuthToken, setAuthToken, removeAuthToken };
+function authHeader() {
+  // return authorization header with basic auth credentials
+  let user = getAuthToken();
+
+  if (user && user.accessToken) {
+    return { headers: { Authorization: `Bearer ${user.accessToken}` } };
+  } else {
+    return {};
+  }
+}
+
+export { getAuthToken, setAuthToken, removeAuthToken, authHeader };

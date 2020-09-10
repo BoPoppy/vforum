@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     width: 100,
     [theme.breakpoints.down('xs')]: {
-      width: 100,
+      width: 50,
     },
   },
   button: {

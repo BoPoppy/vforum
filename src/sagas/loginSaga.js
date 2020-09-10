@@ -1,5 +1,4 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
-
 import { LOGIN } from '../constants';
 import { loginUser } from '../apis';
 import {
@@ -19,7 +18,6 @@ function* callSubmit({ email, password }) {
     password,
   });
   const { data } = res;
-  console.log(data);
   if (data.error) {
     yield put(setError());
     yield put(showMessage(3, data.error));
@@ -27,9 +25,12 @@ function* callSubmit({ email, password }) {
     yield put(setError());
     yield put(showMessage(3, data.Error));
   } else {
-    yield setAuthToken({ id: data.id, token: data.token });
+    yield setAuthToken({
+      accessToken: data.accessToken,
+      refresh: data.refresh,
+    });
     yield put(setId());
-    yield put(showMessage(2, data.message));
+    yield put(showMessage(2, 'Login successfully'));
   }
   yield put(hideLoading());
 }

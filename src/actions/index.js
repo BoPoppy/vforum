@@ -1,4 +1,12 @@
-import { LOGIN, REGISTER, LOADING, MESSAGE, LOGOUT } from '../constants';
+import {
+  LOGIN,
+  REGISTER,
+  LOADING,
+  MESSAGE,
+  LOGOUT,
+  INFO,
+  CHANGE_PASSWORD,
+} from '../constants';
 
 const loadId = (email, password) => ({
   type: LOGIN.LOAD,
@@ -52,6 +60,44 @@ const logOut = () => ({
   type: LOGOUT.SUBMIT,
 });
 
+const requestInfo = () => ({
+  type: INFO.LOAD_INFO,
+});
+
+const requestInfoSuccess = (display_name, email, gender, role, id) => ({
+  type: INFO.SUCCESS_INFO,
+  display_name,
+  email,
+  gender,
+  role,
+  id,
+});
+
+const requestInfoFailed = () => ({
+  type: INFO.FAILED_INFO,
+});
+
+const requestChangePassword = (oldpassword, newpassword, renewpassword) => ({
+  type: CHANGE_PASSWORD.CHANGE_PASSWORD_LOAD,
+  oldpassword,
+  newpassword,
+  renewpassword,
+});
+
+const changePasswordSuccess = (message) => ({
+  type: CHANGE_PASSWORD.CHANGE_PASSWORD_SUCCESS,
+  message,
+});
+
+const changePasswordFailed = (message) => ({
+  type: CHANGE_PASSWORD.CHANGE_PASSWORD_FAILED,
+  message,
+});
+
+const refreshChangePassword = () => ({
+  type: CHANGE_PASSWORD.CHANGE_PASSWORD_REFRESH,
+});
+
 export {
   loadId,
   setId,
@@ -64,4 +110,11 @@ export {
   showMessage,
   hideMessage,
   logOut,
+  requestInfo,
+  requestInfoFailed,
+  requestInfoSuccess,
+  requestChangePassword,
+  changePasswordFailed,
+  changePasswordSuccess,
+  refreshChangePassword,
 };
