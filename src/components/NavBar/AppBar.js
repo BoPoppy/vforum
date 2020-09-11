@@ -25,7 +25,7 @@ import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from 'react-router-dom';
 import { getAuthToken } from '../../common/auth';
-import { logOut, requestInfo } from '../../actions';
+import { logOut } from '../../actions';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({

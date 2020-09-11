@@ -6,6 +6,8 @@ import popoverMessageReducer from './popoverMessageReducer';
 import logOutReducer from './logOutReducer';
 import userInfoReducer from './userInfoReducer';
 import changePasswordRequest from './changePasswordReducer';
+import getGroupListReducer from './getGroupListReducer';
+import getTopicListReducer from './getTopicListReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   logOut: logOutReducer,
   userInfo: userInfoReducer,
   changePassword: changePasswordRequest,
+  groupList: getGroupListReducer,
+  topicList: getTopicListReducer,
 });
 
 export default rootReducer;

@@ -1,3 +1,5 @@
+import { refreshToken } from '../apis';
+
 function getAuthToken() {
   return JSON.parse(localStorage.getItem('storage'));
 }
@@ -21,4 +23,17 @@ function authHeader() {
   }
 }
 
-export { getAuthToken, setAuthToken, removeAuthToken, authHeader };
+function refreshNewToken() {
+  const storage = getAuthToken();
+  const data = refreshToken(storage.refreshToken);
+
+  return data;
+}
+
+export {
+  getAuthToken,
+  setAuthToken,
+  removeAuthToken,
+  authHeader,
+  refreshNewToken,
+};

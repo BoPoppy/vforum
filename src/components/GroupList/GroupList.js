@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 function GroupList(props) {
   const classes = useStyles();
-  const { discription, posts, comments, newest } = props;
+  const { description, createdBy, createdAt, name, id } = props;
 
   return (
     <div>
@@ -29,17 +29,20 @@ function GroupList(props) {
           <ForumIcon className={classes.icon} />
         </Grid>
         <Grid item xs={7}>
-          <p style={{ marginBottom: '0' }}>{discription}</p>
-          <div style={{ display: 'flex' }}>
-            <p style={{ paddingRight: '4px', marginBottom: '0' }}>Posts: </p>
-            <p style={{ paddingRight: '4px', marginBottom: '0' }}>{posts},</p>
-            <p style={{ paddingRight: '4px', marginBottom: '0' }}>Comments: </p>
-            <p style={{ paddingRight: '4px', marginBottom: '0' }}>{comments}</p>
-          </div>
+          <p style={{ marginBottom: '0' }}>{name}</p>
+          <p style={{ marginBottom: '0' }}>{description}</p>
         </Grid>
         <Grid item xs={4}>
           <Alert icon={false} severity='warning'>
-            newest post: {newest}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <p style={{ paddingRight: '4px', marginBottom: '0' }}>
+                Created By: {createdBy}
+              </p>
+
+              <p style={{ paddingRight: '4px', marginBottom: '0' }}>
+                Created At: {createdAt}
+              </p>
+            </div>
           </Alert>
         </Grid>
       </Grid>

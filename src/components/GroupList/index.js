@@ -1,87 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import GroupList from './GroupList';
+import { Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { requestTopicList } from '../../actions';
 
-const topics = [
-  { discription: 'techs news', posts: 566556, comments: 45, newest: '24 mins' },
-  {
-    discription: 'techs drip',
-    posts: 21312,
-    comments: 4390,
-    newest: '25 seconds',
-  },
-  {
-    discription: 'techs win',
-    posts: 43245,
-    comments: 4530,
-    newest: '5/6/2020',
-  },
-];
-
-function index() {
+function ViewGroup(props) {
+  const { name, createdBy, createdAt, id, requestTopicList, topicList } = props;
+  useEffect(() => {
+    requestTopicList(id);
+  }, []);
   return (
     <div>
       <Alert icon={false} severity='info'>
-        <AlertTitle>Techs</AlertTitle>
-        This group is about techs
+        <AlertTitle>{name}</AlertTitle>
+        <div>
+          <Typography>By: {createdBy}</Typography>
+          <Typography>Date created: {createdAt}</Typography>
+        </div>
       </Alert>
-      {topics.map((item, index) => {
-        const { discription, posts, comments, newest } = item;
+      {topicList.map((item, index) => {
+        const { name, createdAt, createdBy, _id, description } = item;
         return (
           <GroupList
             key={index}
-            discription={discription}
-            posts={posts}
-            comments={comments}
-            newest={newest}
-          />
-        );
-      })}
-      <Alert icon={false} severity='info'>
-        <AlertTitle>Techs</AlertTitle>
-        This group is about techs
-      </Alert>
-      {topics.map((item, index) => {
-        const { discription, posts, comments, newest } = item;
-        return (
-          <GroupList
-            key={index}
-            discription={discription}
-            posts={posts}
-            comments={comments}
-            newest={newest}
-          />
-        );
-      })}
-      <Alert icon={false} severity='info'>
-        <AlertTitle>Techs</AlertTitle>
-        This group is about techs
-      </Alert>
-      {topics.map((item, index) => {
-        const { discription, posts, comments, newest } = item;
-        return (
-          <GroupList
-            key={index}
-            discription={discription}
-            posts={posts}
-            comments={comments}
-            newest={newest}
-          />
-        );
-      })}
-      <Alert icon={false} severity='info'>
-        <AlertTitle>Techs</AlertTitle>
-        This group is about techs
-      </Alert>
-      {topics.map((item, index) => {
-        const { discription, posts, comments, newest } = item;
-        return (
-          <GroupList
-            key={index}
-            discription={discription}
-            posts={posts}
-            comments={comments}
-            newest={newest}
+            id={_id}
+            name={name}
+            description={description}
+            createdAt={createdAt}
+            createdBy={createdBy}
           />
         );
       })}
@@ -89,4 +36,12 @@ function index() {
   );
 }
 
-export default index;
+const mapStateToProps = ({ topicList }) => ({
+  topicList,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  requestTopicList: (id) => dispatch(requestTopicList(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewGroup);

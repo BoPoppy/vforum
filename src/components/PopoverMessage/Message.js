@@ -53,6 +53,7 @@ function Message(props) {
             size='small'
             component={NavLink}
             onClick={props.onClosePanel}
+            type='submit'
             to={props.type === 1 ? '/login' : '/vforum'}
             style={{
               textDecoration: 'none',
@@ -69,6 +70,7 @@ function Message(props) {
             variant='contained'
             color='secondary'
             size='small'
+            type='submit'
             onClick={props.onClosePanel}
             className={classes.button}
             startIcon={<ReplayIcon />}

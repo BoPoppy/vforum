@@ -14,12 +14,8 @@ function* callChangePassword({ oldpassword, newpassword, renewpassword }) {
   const { data } = res;
   if (data.error) {
     yield put(changePasswordFailed(data.error));
-  } else if (data.Error) {
-    yield put(changePasswordFailed(data.Error));
   } else {
-    yield put(
-      changePasswordSuccess('The password has been changed successfully')
-    );
+    yield put(changePasswordSuccess(data.message));
   }
 }
 

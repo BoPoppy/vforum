@@ -6,6 +6,8 @@ import {
   LOGOUT,
   INFO,
   CHANGE_PASSWORD,
+  GET_GROUP_LIST,
+  GET_TOPIC_LIST,
 } from '../constants';
 
 const loadId = (email, password) => ({
@@ -98,6 +100,33 @@ const refreshChangePassword = () => ({
   type: CHANGE_PASSWORD.CHANGE_PASSWORD_REFRESH,
 });
 
+const requestGroupList = () => ({
+  type: GET_GROUP_LIST.REQUEST_GROUP_LIST,
+});
+
+const successGroupList = (groupList) => ({
+  type: GET_GROUP_LIST.SUCCESS_GROUP_LIST,
+  groupList,
+});
+
+const failedGroupList = () => ({
+  type: GET_GROUP_LIST.FAILED_GROUP_LIST,
+});
+
+const requestTopicList = (id) => ({
+  type: GET_TOPIC_LIST.REQUEST_TOPIC_LIST,
+  id,
+});
+
+const successTopicList = (topicList) => ({
+  type: GET_TOPIC_LIST.TOPIC_LIST_SUCCESS,
+  topicList,
+});
+
+const failedTopicList = () => ({
+  type: GET_TOPIC_LIST.FAILED_TOPIC_LIST,
+});
+
 export {
   loadId,
   setId,
@@ -117,4 +146,10 @@ export {
   changePasswordFailed,
   changePasswordSuccess,
   refreshChangePassword,
+  requestGroupList,
+  successGroupList,
+  failedGroupList,
+  requestTopicList,
+  successTopicList,
+  failedTopicList,
 };

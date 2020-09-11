@@ -18,16 +18,14 @@ function* callSubmit({ email, password }) {
     password,
   });
   const { data } = res;
+  console.log(data);
   if (data.error) {
     yield put(setError());
     yield put(showMessage(3, data.error));
-  } else if (data.Error) {
-    yield put(setError());
-    yield put(showMessage(3, data.Error));
   } else {
     yield setAuthToken({
       accessToken: data.accessToken,
-      refresh: data.refresh,
+      refreshToken: data.refreshToken,
     });
     yield put(setId());
     yield put(showMessage(2, 'Login successfully'));

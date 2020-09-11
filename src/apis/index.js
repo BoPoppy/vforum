@@ -29,7 +29,29 @@ const changePassword = (data) => {
 
 const refreshToken = (data) => {
   console.log('RefreshToken', data);
-  return axiosService.post(`${REACT_APP_API_URL}/v1/api/refresh-token`, data);
+  return axiosService.post(`${REACT_APP_API_URL}/v1/api/refresh-token`, {
+    refreshToken: data,
+  });
 };
 
-export { registerUser, loginUser, getUserInfo, changePassword, refreshToken };
+const getGroupList = () => {
+  console.log('Get group list');
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/group`, authHeader());
+};
+
+const getTopicList = (id) => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/group/${id}/topic`,
+    authHeader()
+  );
+};
+
+export {
+  registerUser,
+  loginUser,
+  getUserInfo,
+  changePassword,
+  refreshToken,
+  getGroupList,
+  getTopicList,
+};
