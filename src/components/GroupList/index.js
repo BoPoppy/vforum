@@ -21,10 +21,12 @@ function ViewGroup(props) {
       </Alert>
       {topicList.map((item, index) => {
         const { name, createdAt, createdBy, _id, description } = item;
+
         return (
           <GroupList
             key={index}
-            id={_id}
+            topicId={_id}
+            groupId={id}
             name={name}
             description={description}
             createdAt={createdAt}

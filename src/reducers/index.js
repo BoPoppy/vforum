@@ -7,6 +7,8 @@ import logOutReducer from './logOutReducer';
 import userInfoReducer from './userInfoReducer';
 import changePasswordRequest from './changePasswordReducer';
 import getGroupListReducer from './getGroupListReducer';
+import postListReducer from './postListReducer';
+import postReducer from './postReducer';
 import getTopicListReducer from './getTopicListReducer';
 
 const rootReducer = combineReducers({
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   changePassword: changePasswordRequest,
   groupList: getGroupListReducer,
   topicList: getTopicListReducer,
+  postList: postListReducer,
+  post: postReducer,
 });
 
 export default rootReducer;

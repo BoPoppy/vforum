@@ -46,6 +46,20 @@ const getTopicList = (id) => {
   );
 };
 
+const getPostList = (groupId, topicId) => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post`,
+    authHeader()
+  );
+};
+
+const getPost = (groupId, topicId, postId) => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}`,
+    authHeader()
+  );
+};
+
 export {
   registerUser,
   loginUser,
@@ -54,4 +68,6 @@ export {
   refreshToken,
   getGroupList,
   getTopicList,
+  getPostList,
+  getPost,
 };

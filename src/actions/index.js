@@ -8,6 +8,9 @@ import {
   CHANGE_PASSWORD,
   GET_GROUP_LIST,
   GET_TOPIC_LIST,
+  GET_POST_LIST,
+  REQUEST_POST,
+  COMMENT_REQUEST,
 } from '../constants';
 
 const loadId = (email, password) => ({
@@ -127,6 +130,54 @@ const failedTopicList = () => ({
   type: GET_TOPIC_LIST.FAILED_TOPIC_LIST,
 });
 
+const getPostList = (groupId, topicId) => ({
+  type: GET_POST_LIST.REQUEST_POST_LIST,
+  groupId,
+  topicId,
+});
+
+const successPostList = (postList) => ({
+  type: GET_POST_LIST.POST_LIST_SUCCESS,
+  postList,
+});
+
+const failedPostList = () => ({
+  type: GET_POST_LIST.FAILED_POST_LIST,
+});
+
+const getPost = (groupId, topicId, postId) => ({
+  type: REQUEST_POST.LOAD_POST,
+  groupId,
+  topicId,
+  postId,
+});
+
+const successPost = (post) => ({
+  type: REQUEST_POST.POST_SUCCESS,
+  post,
+});
+
+const failedPost = () => ({
+  type: REQUEST_POST.FAILED_POST,
+});
+
+const commentRequest = (groupId, topicId, postId, data) => ({
+  type: COMMENT_REQUEST.COMMENT_POST_REQUEST,
+  groupId,
+  topicId,
+  postId,
+  data,
+});
+
+const commentSuccess = (message) => ({
+  type: COMMENT_REQUEST.COMMENT_POST_SUCCESS,
+  message,
+});
+
+const commentFailed = () => ({
+  type: COMMENT_REQUEST.COMMENT_POST_FAILED,
+});
+
 export {
   loadId,
   setId,
@@ -152,4 +203,13 @@ export {
   requestTopicList,
   successTopicList,
   failedTopicList,
+  getPostList,
+  successPostList,
+  failedPostList,
+  getPost,
+  successPost,
+  failedPost,
+  commentFailed,
+  commentSuccess,
+  commentRequest,
 };

@@ -1,11 +1,16 @@
 import React from 'react';
-import { Grid, Divider, makeStyles } from '@material-ui/core';
+import { Grid, Divider, makeStyles, Button } from '@material-ui/core';
 import ForumIcon from '@material-ui/icons/Forum';
+import { NavLink } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    display: 'flex',
+  },
   icon: {
     fontSize: 40,
+
     [theme.breakpoints.down('md')]: {
       fontSize: 30,
     },
@@ -14,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 function GroupList(props) {
   const classes = useStyles();
-  const { description, createdBy, createdAt, name, id } = props;
+  const { description, createdBy, createdAt, name, topicId, groupId } = props;
 
   return (
     <div>
@@ -25,12 +30,18 @@ function GroupList(props) {
         alignItems='center'
         spacing={2}
       >
-        <Grid item xs={1}>
+        <Grid item xs={8} className={classes.title}>
           <ForumIcon className={classes.icon} />
-        </Grid>
-        <Grid item xs={7}>
-          <p style={{ marginBottom: '0' }}>{name}</p>
-          <p style={{ marginBottom: '0' }}>{description}</p>
+          <div>
+            <NavLink
+              to={`/vforum/group/${groupId}/topic/${topicId}`}
+              style={{ marginBottom: '0' }}
+            >
+              {name}
+            </NavLink>
+
+            <p style={{ marginBottom: '0' }}>{description}</p>
+          </div>
         </Grid>
         <Grid item xs={4}>
           <Alert icon={false} severity='warning'>
@@ -38,7 +49,6 @@ function GroupList(props) {
               <p style={{ paddingRight: '4px', marginBottom: '0' }}>
                 Created By: {createdBy}
               </p>
-
               <p style={{ paddingRight: '4px', marginBottom: '0' }}>
                 Created At: {createdAt}
               </p>

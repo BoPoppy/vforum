@@ -15,6 +15,8 @@ import GlobalLoading from './components/GlobalLoading';
 import PopoverMessage from './components/PopoverMessage';
 import PrivateRoute from './common/PrivateRoute';
 import Settings from './containers/Settings';
+import PostsList from './containers/PostsList/PostsList';
+import Post from './containers/Post';
 
 const useStyles = makeStyles({});
 
@@ -28,11 +30,20 @@ function App() {
         <PopoverMessage />
         <Switch>
           <PrivateRoute exact path='/' component={Homescreen} />
-          <PrivateRoute path='/vforum' component={Vforum} />
+          <PrivateRoute path='/vforum' exact component={Vforum} />
           <Route path='/login' component={LoginForm} />
           <Route path='/register' component={Register} />
           <PrivateRoute path='/event' component={EventPage} />
           <PrivateRoute path='/settings' component={Settings} />
+          <PrivateRoute
+            path='/vforum/group/:groupId/topic/:topicId'
+            exact
+            component={PostsList}
+          />
+          <PrivateRoute
+            path='/vforum/group/:groupId/topic/:topicId/post/:postId'
+            component={Post}
+          />
           <PrivateRoute path='/vmemory' component={Vmemory} />
         </Switch>
       </StylesProvider>
