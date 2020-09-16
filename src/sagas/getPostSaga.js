@@ -6,7 +6,7 @@ import { successPost } from '../actions';
 function* loadPost({ groupId, topicId, postId }) {
   const res = yield call(getPost, groupId, topicId, postId);
   const { data } = res;
-  yield put(successPost(data));
+  yield put(successPost(data.result[0]));
 }
 
 function* getPostSaga() {

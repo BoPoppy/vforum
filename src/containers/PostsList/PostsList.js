@@ -37,31 +37,32 @@ function PostsList(props) {
             <Typography variant='h4' gutterBottom>
               Vforum
             </Typography>
-            {postList.map((item, key) => {
-              const {
-                title,
-                createdBy,
-                createdAt,
-                _id,
-                countLike,
-                countCommentPost,
-                description,
-              } = item;
-              return (
-                <ViewPostList
-                  key={key}
-                  title={title}
-                  createdAt={createdAt}
-                  createdBy={createdBy}
-                  postId={_id}
-                  likes={countLike}
-                  comments={countCommentPost}
-                  description={description}
-                  groupId={groupId}
-                  topicId={topicId}
-                />
-              );
-            })}
+            {postList &&
+              postList.map((item, key) => {
+                const {
+                  title,
+                  createdBy,
+                  createdAt,
+                  _id,
+                  countLike,
+                  countCommentPost,
+                  description,
+                } = item;
+                return (
+                  <ViewPostList
+                    key={key}
+                    title={title}
+                    createdAt={createdAt}
+                    createdBy={createdBy}
+                    postId={_id}
+                    likes={countLike}
+                    comments={countCommentPost}
+                    description={description}
+                    groupId={groupId}
+                    topicId={topicId}
+                  />
+                );
+              })}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12} md={3}>

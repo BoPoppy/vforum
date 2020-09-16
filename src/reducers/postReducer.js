@@ -5,7 +5,7 @@ const reducer = (state = initialState, action) => {
   var newstate = state;
   switch (action.type) {
     case REQUEST_POST.POST_SUCCESS:
-      newstate = action.post.data[0];
+      newstate = action.post;
       return newstate;
     default:
       return newstate;

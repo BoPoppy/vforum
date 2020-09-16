@@ -1,4 +1,5 @@
 import axiosService from '../common/axiosService';
+
 import { authHeader } from '../common/auth';
 
 const REACT_APP_API_URL = 'http://localhost:4000';
@@ -60,6 +61,14 @@ const getPost = (groupId, topicId, postId) => {
   );
 };
 
+const requestComment = (groupId, topicId, postId, description) => {
+  return axiosService.post(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment`,
+    description,
+    authHeader()
+  );
+};
+
 export {
   registerUser,
   loginUser,
@@ -70,4 +79,5 @@ export {
   getTopicList,
   getPostList,
   getPost,
+  requestComment,
 };

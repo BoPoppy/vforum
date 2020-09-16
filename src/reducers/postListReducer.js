@@ -5,7 +5,7 @@ const reducer = (state = initialState, action) => {
   var newstate = state;
   switch (action.type) {
     case GET_POST_LIST.POST_LIST_SUCCESS:
-      newstate = action.postList.data;
+      newstate = action.postList;
       return newstate;
     default:
       return newstate;

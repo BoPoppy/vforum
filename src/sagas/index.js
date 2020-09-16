@@ -6,6 +6,8 @@ import getGroupListSaga from './groupListSaga';
 import getTopicListSaga from './getTopicListSaga';
 import getPostListSaga from './getPostListSaga';
 import getPostSaga from './getPostSaga';
+import commentPostSaga from './commentPostSaga';
+
 import { all, fork } from 'redux-saga/effects';
 
 function* rootSaga() {
@@ -18,6 +20,7 @@ function* rootSaga() {
     fork(getTopicListSaga),
     fork(getPostListSaga),
     fork(getPostSaga),
+    fork(commentPostSaga),
   ]);
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import GroupList from './GroupList';
 import { Typography } from '@material-ui/core';
@@ -7,9 +7,25 @@ import { requestTopicList } from '../../actions';
 
 function ViewGroup(props) {
   const { name, createdBy, createdAt, id, requestTopicList, topicList } = props;
+
   useEffect(() => {
     requestTopicList(id);
   }, []);
+
+  useEffect(() => {
+    setstate(newTopicList());
+  }, [topicList]);
+
+  const [state, setstate] = useState([]);
+
+  const newTopicList = () => {
+    for (let i = 0; i < topicList.length; i++) {
+      if (topicList[i].groupId === id) {
+        return topicList[i].topicList;
+      }
+    }
+  };
+
   return (
     <div>
       <Alert icon={false} severity='info'>
@@ -19,28 +35,27 @@ function ViewGroup(props) {
           <Typography>Date created: {createdAt}</Typography>
         </div>
       </Alert>
-      {topicList.map((item, index) => {
-        const { name, createdAt, createdBy, _id, description } = item;
 
-        return (
-          <GroupList
-            key={index}
-            topicId={_id}
-            groupId={id}
-            name={name}
-            description={description}
-            createdAt={createdAt}
-            createdBy={createdBy}
-          />
-        );
-      })}
+      {state &&
+        state.map((item2, index2) => {
+          const { name, createdAt, createdBy, _id, description } = item2;
+          return (
+            <GroupList
+              key={index2}
+              topicId={_id}
+              groupId={id}
+              name={name}
+              description={description}
+              createdAt={createdAt}
+              createdBy={createdBy}
+            />
+          );
+        })}
     </div>
   );
 }
 
-const mapStateToProps = ({ topicList }) => ({
-  topicList,
-});
+const mapStateToProps = ({ topicList }) => ({ topicList });
 
 const mapDispatchToProps = (dispatch) => ({
   requestTopicList: (id) => dispatch(requestTopicList(id)),

@@ -12,6 +12,7 @@ import Comment from '../../components/Comment';
 import { connect } from 'react-redux';
 import { getPost } from '../../actions';
 import { useForm } from 'react-hook-form';
+import { commentRequest } from '../../actions';
 import ErrorMessage from '../../components/errorMessage';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Post(props) {
-  const { match, post, getPost } = props;
+  const { match, post, getPost, commentRequest } = props;
   const [checked, setChecked] = React.useState(false);
   const { register, handleSubmit, errors } = useForm();
   const { groupId, topicId, postId } = match.params;
@@ -85,7 +86,9 @@ function Post(props) {
   }, []);
 
   const onSubmit = (data) => {
-    const { comment } = data;
+    const { description } = data;
+    console.log(description);
+    commentRequest(groupId, topicId, postId, description);
   };
 
   const handleChange = () => {
@@ -128,12 +131,12 @@ function Post(props) {
                           required: 'Required',
                         })}
                         className={classes.textfield}
-                        name='comment'
+                        name='description'
                       />
 
                       <br />
-                      {errors.comment && (
-                        <ErrorMessage text={errors.comment.message} />
+                      {errors.description && (
+                        <ErrorMessage text={errors.description.message} />
                       )}
                       <Button
                         type='submit'
@@ -149,7 +152,31 @@ function Post(props) {
               </div>
             </div>
           </Paper>
-          <Comment />
+          {commentsPost &&
+            commentsPost.map((item, index) => {
+              const {
+                countLike,
+                createdBy,
+                updatedBy,
+                _id,
+                description,
+                createdAt,
+                updatedAt,
+              } = item;
+              return (
+                <Comment
+                  key={index}
+                  likes={countLike}
+                  createdAt={createdAt}
+                  createdBy={createdBy}
+                  updated={updatedBy}
+                  id={_id}
+                  description={description}
+                  updatedAt={updatedAt}
+                  postId={postId}
+                />
+              );
+            })}
         </Grid>
         <Grid item xs={3}></Grid>
       </Grid>
@@ -164,6 +191,8 @@ const mapStateToProps = ({ post }) => ({
 const mapDispatchToProps = (dispatch) => ({
   getPost: (groupId, topicId, postId) =>
     dispatch(getPost(groupId, topicId, postId)),
+  commentRequest: (groupId, topicId, postId, description) =>
+    dispatch(commentRequest(groupId, topicId, postId, description)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

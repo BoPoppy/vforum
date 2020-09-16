@@ -16,14 +16,14 @@ function* loadUser() {
 
   delay(3000);
   const res = yield call(getUserInfo);
-  const { data } = res.data;
+  const { result } = res.data;
   yield put(
     requestInfoSuccess(
-      data.display_name,
-      data.email,
-      data.gender,
-      data.role,
-      data._id
+      result.display_name,
+      result.email,
+      result.gender,
+      result.role,
+      result._id
     )
   );
   yield put(hideLoading());

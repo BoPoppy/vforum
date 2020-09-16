@@ -10,6 +10,7 @@ import getGroupListReducer from './getGroupListReducer';
 import postListReducer from './postListReducer';
 import postReducer from './postReducer';
 import getTopicListReducer from './getTopicListReducer';
+import commentPostReducer from './commentPostReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   topicList: getTopicListReducer,
   postList: postListReducer,
   post: postReducer,
+  comment: commentPostReducer,
 });
 
 export default rootReducer;

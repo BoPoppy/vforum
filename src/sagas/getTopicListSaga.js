@@ -1,4 +1,4 @@
-import { takeEvery, call, put, delay } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { GET_TOPIC_LIST } from '../constants';
 import { getTopicList } from '../apis';
 import { successTopicList } from '../actions';
@@ -6,7 +6,7 @@ import { successTopicList } from '../actions';
 function* loadTopicList({ id }) {
   const res = yield call(getTopicList, id);
   const { data } = res;
-  yield put(successTopicList(data));
+  yield put(successTopicList(data.result, id));
 }
 
 function* getTopicListSaga() {

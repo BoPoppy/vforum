@@ -4,7 +4,7 @@ import { changePassword } from '../apis';
 import { changePasswordFailed, changePasswordSuccess } from '../actions/index';
 
 function* callChangePassword({ oldpassword, newpassword, renewpassword }) {
-  console.log('sagaLogin', oldpassword, newpassword, renewpassword);
+  console.log('changePassword', oldpassword, newpassword, renewpassword);
   delay(5000);
   const res = yield call(changePassword, {
     oldpassword,

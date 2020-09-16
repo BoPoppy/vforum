@@ -121,9 +121,10 @@ const requestTopicList = (id) => ({
   id,
 });
 
-const successTopicList = (topicList) => ({
+const successTopicList = (topicList, groupId) => ({
   type: GET_TOPIC_LIST.TOPIC_LIST_SUCCESS,
   topicList,
+  groupId,
 });
 
 const failedTopicList = () => ({
@@ -161,12 +162,12 @@ const failedPost = () => ({
   type: REQUEST_POST.FAILED_POST,
 });
 
-const commentRequest = (groupId, topicId, postId, data) => ({
+const commentRequest = (groupId, topicId, postId, description) => ({
   type: COMMENT_REQUEST.COMMENT_POST_REQUEST,
   groupId,
   topicId,
   postId,
-  data,
+  description,
 });
 
 const commentSuccess = (message) => ({

@@ -19,13 +19,13 @@ function* callSubmit({ email, password }) {
   });
   const { data } = res;
   console.log(data);
-  if (data.error) {
+  if (data.code === 400) {
     yield put(setError());
     yield put(showMessage(3, data.error));
   } else {
     yield setAuthToken({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
+      accessToken: data.result.accessToken,
+      refreshToken: data.result.refreshToken,
     });
     yield put(setId());
     yield put(showMessage(2, 'Login successfully'));

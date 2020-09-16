@@ -1,14 +1,16 @@
-import { takeEvery, call, put, delay } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { GET_GROUP_LIST } from '../constants';
 import { getGroupList } from '../apis';
 import { showLoading, hideLoading, successGroupList } from '../actions';
 
 function* loadGroupList() {
   yield put(showLoading());
-  delay(3000);
+
   const res = yield call(getGroupList);
+
   const { data } = res;
-  yield put(successGroupList(data));
+
+  yield put(successGroupList(data.result));
   yield put(hideLoading());
 }
 

@@ -18,8 +18,8 @@ class axiosService {
     return this.instance.get(url, headers);
   }
 
-  post(url, body) {
-    return this.instance.post(url, body);
+  post(url, body, headers) {
+    return this.instance.post(url, body, headers);
   }
 
   patch(url, body, headers) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Divider, makeStyles, Button } from '@material-ui/core';
+import { Grid, Divider, makeStyles } from '@material-ui/core';
 import ForumIcon from '@material-ui/icons/Forum';
 import { NavLink } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
