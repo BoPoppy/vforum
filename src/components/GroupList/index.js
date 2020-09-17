@@ -4,6 +4,7 @@ import GroupList from './GroupList';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { requestTopicList } from '../../actions';
+import { NavLink } from 'react-router-dom';
 
 function ViewGroup(props) {
   const { name, createdBy, createdAt, id, requestTopicList, topicList } = props;
@@ -29,7 +30,9 @@ function ViewGroup(props) {
   return (
     <div>
       <Alert icon={false} severity='info'>
-        <AlertTitle>{name}</AlertTitle>
+        <AlertTitle>
+          <NavLink to={`/vforum/group/${id}/topic`}>{name}</NavLink>
+        </AlertTitle>
         <div>
           <Typography>By: {createdBy}</Typography>
           <Typography>Date created: {createdAt}</Typography>

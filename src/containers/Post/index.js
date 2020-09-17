@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+
   paper: {
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
@@ -79,15 +80,16 @@ function Post(props) {
     title,
     description,
     createdAt,
+    comment,
   } = post;
 
   useEffect(() => {
     getPost(groupId, topicId, postId);
-  }, []);
+  }, [comment]);
 
   const onSubmit = (data) => {
     const { description } = data;
-    console.log(description);
+
     commentRequest(groupId, topicId, postId, description);
   };
 
@@ -184,8 +186,9 @@ function Post(props) {
   );
 }
 
-const mapStateToProps = ({ post }) => ({
+const mapStateToProps = ({ post, comment }) => ({
   post,
+  comment,
 });
 
 const mapDispatchToProps = (dispatch) => ({

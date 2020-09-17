@@ -16,7 +16,9 @@ import PopoverMessage from './components/PopoverMessage';
 import PrivateRoute from './common/PrivateRoute';
 import Settings from './containers/Settings';
 import PostsList from './containers/PostsList/PostsList';
+import TopicList from './containers/TopicList';
 import Post from './containers/Post';
+import UserList from './containers/UserList';
 
 const useStyles = makeStyles({});
 
@@ -35,12 +37,19 @@ function App() {
           <Route path='/register' component={Register} />
           <PrivateRoute path='/event' component={EventPage} />
           <PrivateRoute path='/settings' component={Settings} />
+          <PrivateRoute path='/userlist' component={UserList} />
           <PrivateRoute
-            path='/vforum/group/:groupId/topic/:topicId'
+            path='/vforum/group/:id/topic'
             exact
+            component={TopicList}
+          />
+          <PrivateRoute
+            exact
+            path='/vforum/group/:groupId/topic/:topicId/post'
             component={PostsList}
           />
           <PrivateRoute
+            exact
             path='/vforum/group/:groupId/topic/:topicId/post/:postId'
             component={Post}
           />

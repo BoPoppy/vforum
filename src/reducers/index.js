@@ -11,6 +11,11 @@ import postListReducer from './postListReducer';
 import postReducer from './postReducer';
 import getTopicListReducer from './getTopicListReducer';
 import commentPostReducer from './commentPostReducer';
+import submitPost from './submitPostReducer';
+import submitTopic from './submitTopicReducer';
+import singleTopicList from './singleTopicListReducer';
+import submitGroup from './submitGroupReducer';
+import getUserList from './getUserListReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -25,6 +30,11 @@ const rootReducer = combineReducers({
   postList: postListReducer,
   post: postReducer,
   comment: commentPostReducer,
+  submitPost: submitPost,
+  submitTopic: submitTopic,
+  singleTopicList: singleTopicList,
+  submitGroup: submitGroup,
+  UserList: getUserList,
 });
 
 export default rootReducer;

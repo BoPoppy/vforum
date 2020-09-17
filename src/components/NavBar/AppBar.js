@@ -25,7 +25,7 @@ import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from 'react-router-dom';
 import { getAuthToken } from '../../common/auth';
-import { logOut } from '../../actions';
+import { submitLogOut } from '../../actions';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Appbar = (props) => {
-  const { logOut } = props;
+  const { submitLogOut } = props;
   const data = getAuthToken('storage');
   const classes = useStyles();
   const theme = useTheme();
@@ -192,7 +192,7 @@ const Appbar = (props) => {
                     component={NavLink}
                     to={data ? '/login' : '/register'}
                     className={classes.link}
-                    onClick={data ? logOut : null}
+                    onClick={data ? submitLogOut : null}
                     activeClassName={classes.activeLink}
                   >
                     <ListItemIcon>
@@ -232,7 +232,7 @@ const Appbar = (props) => {
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
-                onClick={data ? logOut : null}
+                onClick={data ? submitLogOut : null}
                 className={classes.button}
                 startIcon={data ? <ExitToAppIcon /> : <PersonAddIcon />}
               >
@@ -326,7 +326,7 @@ const Appbar = (props) => {
                   textDecoration: 'none',
                   color: 'inherit',
                 }}
-                onClick={data ? logOut : null}
+                onClick={data ? submitLogOut : null}
                 className={classes.button}
                 startIcon={data ? <ExitToAppIcon /> : <PersonAddIcon />}
               >
@@ -346,7 +346,7 @@ const mapStateToProps = ({ loginReducer, logOut }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logOut: () => dispatch(logOut()),
+  submitLogOut: () => dispatch(submitLogOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Appbar);

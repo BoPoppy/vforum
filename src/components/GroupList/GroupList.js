@@ -34,7 +34,7 @@ function GroupList(props) {
           <ForumIcon className={classes.icon} />
           <div>
             <NavLink
-              to={`/vforum/group/${groupId}/topic/${topicId}`}
+              to={`/vforum/group/${groupId}/topic/${topicId}/post`}
               style={{ marginBottom: '0' }}
             >
               {name}

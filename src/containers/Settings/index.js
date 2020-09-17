@@ -19,6 +19,7 @@ import {
   requestInfo,
   requestChangePassword,
   refreshChangePassword,
+  getUserListRequest,
 } from '../../actions';
 import { Alert } from '@material-ui/lab';
 
@@ -67,6 +68,7 @@ function Settings(props) {
     requestChangePassword,
     changePassword,
     refreshChangePassword,
+    getUserListRequest,
   } = props;
 
   const classes = useStyles();
@@ -246,7 +248,16 @@ function Settings(props) {
             </div>
           </Paper>
         </Grid>
-        <Grid item xs={3}></Grid>
+        <Grid item xs={3}>
+          <Button
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+            onClick={() => getUserListRequest()}
+          >
+            View user list
+          </Button>
+        </Grid>
       </Grid>
     </div>
   );
@@ -262,6 +273,7 @@ const mapDispatchToProps = (dispatch) => ({
   requestChangePassword: (oldpassword, newpassword, renewpassword) =>
     dispatch(requestChangePassword(oldpassword, newpassword, renewpassword)),
   refreshChangePassword: () => dispatch(refreshChangePassword()),
+  getUserListRequest: () => dispatch(getUserListRequest()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

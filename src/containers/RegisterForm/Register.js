@@ -24,6 +24,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { connect } from 'react-redux';
 import { registerRequest } from '../../actions';
 import ErrorMessage from '../../components/errorMessage';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -83,6 +84,8 @@ const SignUp = (props) => {
     console.log({ email, display_name, password, gender });
   };
 
+  const data = localStorage.getItem('storage');
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -117,6 +120,7 @@ const SignUp = (props) => {
                 label='Username'
                 name='display_name'
                 autoComplete='username'
+                disabled={data ? true : false}
                 autoFocus
                 error={errors.display_name}
               />
@@ -176,6 +180,7 @@ const SignUp = (props) => {
                 })}
                 fullWidth
                 id='email'
+                disabled={data ? true : false}
                 label='Email Address'
                 name='email'
                 autoComplete='email'
@@ -197,6 +202,7 @@ const SignUp = (props) => {
                 fullWidth
                 name='password'
                 label='Password'
+                disabled={data ? true : false}
                 type='password'
                 id='password'
                 autoComplete='current-password'
@@ -217,6 +223,7 @@ const SignUp = (props) => {
                 fullWidth
                 name='repassword'
                 label='Repeat password'
+                disabled={data ? true : false}
                 type='password'
                 id='repassword'
                 autoComplete='current-password'
@@ -237,6 +244,7 @@ const SignUp = (props) => {
                     <Select
                       labelId='demo-simple-select-label'
                       id='demo-simple-select'
+                      disabled={data ? true : false}
                     >
                       <MenuItem value='male'>Male</MenuItem>
                       <MenuItem value='female'>Female</MenuItem>
@@ -260,6 +268,7 @@ const SignUp = (props) => {
                       name='checkbox'
                       color='primary'
                       defaultValue={false}
+                      disabled={data ? true : false}
                     />
                   }
                   label='I agree to the terms of service, privacy policy and cookie policy.'
@@ -275,17 +284,23 @@ const SignUp = (props) => {
             fullWidth
             variant='contained'
             color='primary'
+            disabled={data ? true : false}
             className={classes.submit}
           >
             Sign Up
           </Button>
-          <Grid container justify='flex-end'>
-            <Grid item>
-              <Link to='/login' className={classes.link}>
-                Already have an account? Sign in
-              </Link>
+
+          {data ? (
+            <Alert severity='warning'>you're already login!!</Alert>
+          ) : (
+            <Grid container justify='flex-end'>
+              <Grid item>
+                <Link to='/login' className={classes.link}>
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </form>
       </div>
     </Container>

@@ -69,7 +69,57 @@ const requestComment = (groupId, topicId, postId, description) => {
   );
 };
 
+const submitPost = (groupId, topicId, data) => {
+  return axiosService.post(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post`,
+    data,
+    authHeader()
+  );
+};
+
+const submitLogout = () => {
+  console.log(authHeader());
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/logout`, authHeader());
+};
+
+const submitTopic = (groupId, data) => {
+  return axiosService.post(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic`,
+    data,
+    authHeader()
+  );
+};
+
+const submitGroup = (data) => {
+  return axiosService.post(
+    `${REACT_APP_API_URL}/v1/api/group`,
+    data,
+    authHeader()
+  );
+};
+
+const getUserList = () => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/admin/info`,
+    authHeader()
+  );
+};
+
+const changeRoleUser = (id, data) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/admin/info/${id}`,
+    data,
+    authHeader()
+  );
+};
+
 export {
+  changeRoleUser,
+  getUserList,
+  submitGroup,
+  submitTopic,
+  submitLogout,
+  submitPost,
   registerUser,
   loginUser,
   getUserInfo,

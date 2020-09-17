@@ -13,8 +13,12 @@ import {
 } from '@material-ui/core';
 import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
-import { getPostList, submitPostRequest, clearSubmitPost } from '../../actions';
-import ViewPostList from '../../components/ViewPostList';
+import {
+  requestSingleTopicList,
+  submitTopicRequest,
+  submitTopicClear,
+} from '../../actions';
+import ViewTopicList from '../../components/ViewTopicList';
 import ErrorMessage from '../../components/errorMessage';
 import { useForm } from 'react-hook-form';
 import { Alert } from '@material-ui/lab';
@@ -49,14 +53,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 function PostsList(props) {
   const {
-    postList,
-    getPostList,
+    singleTopicList,
+    requestSingleTopicList,
     match,
-    submitPost,
-    submitPostRequest,
-    clearSubmitPost,
+    submitTopic,
+    submitTopicRequest,
+    submitTopicClear,
   } = props;
-  const { groupId, topicId } = match.params;
+  const { id } = match.params;
 
   const [open, setOpen] = React.useState(false);
   const { register, handleSubmit, errors } = useForm();
@@ -66,17 +70,17 @@ function PostsList(props) {
   };
 
   const handleClose = () => {
-    clearSubmitPost();
-    getPostList(groupId, topicId);
+    submitTopicClear();
+    requestSingleTopicList(id);
     setOpen(false);
   };
 
   useEffect(() => {
-    getPostList(groupId, topicId);
+    requestSingleTopicList(id);
   }, []);
   const onSubmit = (data) => {
     console.log(data);
-    submitPostRequest(groupId, topicId, data);
+    submitTopicRequest(id, data);
   };
 
   const classes = useStyles();
@@ -95,7 +99,7 @@ function PostsList(props) {
             </Typography>
             <div>
               <Button type='button' onClick={handleOpen}>
-                Create Post
+                Create Topic
               </Button>
               <Modal
                 aria-labelledby='transition-modal-title'
@@ -111,7 +115,7 @@ function PostsList(props) {
               >
                 <Fade in={open}>
                   <div className={classes.modalPaper}>
-                    <h2 id='transition-modal-title'>Create post</h2>
+                    <h2 id='transition-modal-title'>Create topic</h2>
                     <form
                       className={classes.form}
                       noValidate
@@ -124,12 +128,12 @@ function PostsList(props) {
                           required: 'Required',
                         })}
                         fullWidth
-                        name='title'
+                        name='name'
                         label='Title'
-                        id='title'
+                        id='name'
                       />
-                      {errors.title && (
-                        <ErrorMessage text={errors.title.message} />
+                      {errors.name && (
+                        <ErrorMessage text={errors.name.message} />
                       )}
                       <br />
                       <textarea
@@ -154,19 +158,19 @@ function PostsList(props) {
                         Save change
                       </Button>
                     </form>
-                    {submitPost.isLoading === null ? null : (
+                    {submitTopic.isLoading === null ? null : (
                       <div>
-                        {submitPost.isLoading ? (
+                        {submitTopic.isLoading ? (
                           <CircularProgress />
                         ) : (
                           <div>
-                            {submitPost.type === 1 ? (
+                            {submitTopic.type === 1 ? (
                               <Alert severity='success'>
-                                {submitPost.message}
+                                {submitTopic.message}
                               </Alert>
                             ) : (
                               <Alert severity='error'>
-                                {submitPost.message}
+                                {submitTopic.message}
                               </Alert>
                             )}
                           </div>
@@ -177,29 +181,19 @@ function PostsList(props) {
                 </Fade>
               </Modal>
             </div>
-            {postList &&
-              postList.map((item, key) => {
-                const {
-                  title,
-                  createdBy,
-                  createdAt,
-                  _id,
-                  countLike,
-                  countCommentPost,
-                  description,
-                } = item;
+            {singleTopicList &&
+              singleTopicList.map((item, key) => {
+                const { name, createdBy, createdAt, _id, description } = item;
+
                 return (
-                  <ViewPostList
+                  <ViewTopicList
                     key={key}
-                    title={title}
+                    title={name}
                     createdAt={createdAt}
                     createdBy={createdBy}
-                    postId={_id}
-                    likes={countLike}
-                    comments={countCommentPost}
                     description={description}
-                    groupId={groupId}
-                    topicId={topicId}
+                    groupId={id}
+                    topicId={_id}
                   />
                 );
               })}
@@ -215,16 +209,15 @@ function PostsList(props) {
   );
 }
 
-const mapStateToProps = ({ postList, submitPost }) => ({
-  postList,
-  submitPost,
+const mapStateToProps = ({ submitTopic, singleTopicList }) => ({
+  submitTopic,
+  singleTopicList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPostList: (groupId, topicId) => dispatch(getPostList(groupId, topicId)),
-  submitPostRequest: (groupId, topicId, data) =>
-    dispatch(submitPostRequest(groupId, topicId, data)),
-  clearSubmitPost: () => dispatch(clearSubmitPost()),
+  requestSingleTopicList: (id) => dispatch(requestSingleTopicList(id)),
+  submitTopicRequest: (id, data) => dispatch(submitTopicRequest(id, data)),
+  submitTopicClear: () => dispatch(submitTopicClear()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsList);
