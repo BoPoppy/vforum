@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 function TopicList(props) {
   const { title, description, createdAt, createdBy, groupId, topicId } = props;
-  console.log(props);
+
   return (
     <div>
       <Grid container spacing={2}>

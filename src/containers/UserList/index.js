@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
-  Typography,
   Paper,
   Table,
   TableBody,
@@ -10,15 +9,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
+  Chip,
 } from '@material-ui/core';
-import GroupList from '../../components/GroupList';
-import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
 import { getUserListRequest } from '../../actions';
-import { useForm } from 'react-hook-form';
-import { Alert } from '@material-ui/lab';
-import ErrorMessage from '../../components/errorMessage';
+import ModalList from './ModalList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,26 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-
     color: theme.palette.text.secondary,
-  },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalPaper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  textfield: {
-    width: '40%',
-    height: '100px',
-    padding: '10px',
-    backgroundColor: '#d0e2bc',
-    border: '3px dashed #8ebf42',
   },
   table: {
     minWidth: 650,
@@ -57,8 +33,6 @@ function Vforum(props) {
   useEffect(() => {
     getUserListRequest();
   }, []);
-
-  const onSubmit = (data) => {};
 
   const classes = useStyles();
   return (
@@ -80,6 +54,7 @@ function Vforum(props) {
                     <TableCell align='center'>Role</TableCell>
                     <TableCell align='center'>Gender</TableCell>
                     <TableCell align='center'>ID</TableCell>
+                    <TableCell align='center'>Status</TableCell>
                     <TableCell align='center'>Edit</TableCell>
                   </TableRow>
                 </TableHead>
@@ -97,8 +72,14 @@ function Vforum(props) {
                         <TableCell align='center'>{item.gender}</TableCell>
                         <TableCell align='center'>{item._id}</TableCell>
                         <TableCell align='center'>
-                          <Button>Edit</Button>
-                          <Button>delete</Button>
+                          {item.status === 'active' ? (
+                            <Chip color='primary' label={item.status} />
+                          ) : (
+                            <Chip color='secondary' label={item.status} />
+                          )}
+                        </TableCell>
+                        <TableCell align='center'>
+                          <ModalList role={item.role} id={item._id} />
                         </TableCell>
                       </TableRow>
                     ))}

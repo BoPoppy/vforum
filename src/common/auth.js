@@ -1,26 +1,38 @@
 import { refreshToken } from '../apis';
 
 function getAuthToken() {
-  return JSON.parse(localStorage.getItem('storage'));
+  return JSON.parse(localStorage.getItem('accessToken'));
 }
 
-function setAuthToken(token) {
-  localStorage.setItem('storage', JSON.stringify(token));
+function getRefreshToken() {
+  return JSON.parse(localStorage.getItem('refreshToken'));
+}
+
+function getUserId() {
+  return JSON.parse(localStorage.getItem('userId'));
+}
+
+function getUserRole() {
+  return JSON.parse(localStorage.getItem('role'));
+}
+
+function setAuthToken({ accessToken, refreshToken, userId, role }) {
+  localStorage.setItem('accessToken', JSON.stringify(accessToken));
+  localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+  localStorage.setItem('userId', JSON.stringify(userId));
+  localStorage.setItem('role', JSON.stringify(role));
+}
+
+function setNewAuth({ accessToken, refreshTokenFromClient }) {
+  localStorage.setItem('accessToken', JSON.stringify(accessToken));
+  localStorage.setItem('refreshToken', JSON.stringify(refreshTokenFromClient));
 }
 
 function removeAuthToken() {
-  localStorage.removeItem('storage');
-}
-
-function authHeader() {
-  // return authorization header with basic auth credentials
-  let user = getAuthToken();
-
-  if (user && user.accessToken) {
-    return { headers: { Authorization: `Bearer ${user.accessToken}` } };
-  } else {
-    return {};
-  }
+  localStorage.removeItem('userId');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('role');
 }
 
 function refreshNewToken() {
@@ -31,9 +43,12 @@ function refreshNewToken() {
 }
 
 export {
+  getUserRole,
+  setNewAuth,
+  getRefreshToken,
+  getUserId,
   getAuthToken,
   setAuthToken,
   removeAuthToken,
-  authHeader,
   refreshNewToken,
 };

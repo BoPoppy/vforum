@@ -6,7 +6,7 @@ const reducer = (state = initialState, action) => {
   var newState = state;
   switch (action.type) {
     case LOGOUT.SUCCESS:
-      removeAuthToken('storage');
+      removeAuthToken();
       newState = true;
       return newState;
     case LOGIN.LOAD_SUCCESS:

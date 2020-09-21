@@ -1,7 +1,5 @@
 import axiosService from '../common/axiosService';
 
-import { authHeader } from '../common/auth';
-
 const REACT_APP_API_URL = 'http://localhost:4000';
 
 const registerUser = (data) => {
@@ -16,16 +14,12 @@ const loginUser = (data) => {
 
 const getUserInfo = () => {
   console.log('get user info');
-  return axiosService.get(`${REACT_APP_API_URL}/v1/api/info`, authHeader());
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/info`);
 };
 
 const changePassword = (data) => {
   console.log('change user password', data);
-  return axiosService.patch(
-    `${REACT_APP_API_URL}/v1/api/info`,
-    data,
-    authHeader()
-  );
+  return axiosService.patch(`${REACT_APP_API_URL}/v1/api/info`, data);
 };
 
 const refreshToken = (data) => {
@@ -37,83 +31,133 @@ const refreshToken = (data) => {
 
 const getGroupList = () => {
   console.log('Get group list');
-  return axiosService.get(`${REACT_APP_API_URL}/v1/api/group`, authHeader());
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/group`);
 };
 
 const getTopicList = (id) => {
-  return axiosService.get(
-    `${REACT_APP_API_URL}/v1/api/group/${id}/topic`,
-    authHeader()
-  );
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/group/${id}/topic`);
 };
 
 const getPostList = (groupId, topicId) => {
   return axiosService.get(
-    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post`,
-    authHeader()
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post`
   );
 };
 
 const getPost = (groupId, topicId, postId) => {
   return axiosService.get(
-    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}`,
-    authHeader()
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}`
   );
 };
 
 const requestComment = (groupId, topicId, postId, description) => {
   return axiosService.post(
     `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment`,
-    description,
-    authHeader()
+    description
   );
 };
 
 const submitPost = (groupId, topicId, data) => {
   return axiosService.post(
     `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post`,
-    data,
-    authHeader()
+    data
   );
 };
 
 const submitLogout = () => {
-  console.log(authHeader());
-  return axiosService.get(`${REACT_APP_API_URL}/v1/api/logout`, authHeader());
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/logout`);
 };
 
 const submitTopic = (groupId, data) => {
   return axiosService.post(
     `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic`,
-    data,
-    authHeader()
+    data
   );
 };
 
 const submitGroup = (data) => {
-  return axiosService.post(
-    `${REACT_APP_API_URL}/v1/api/group`,
-    data,
-    authHeader()
-  );
+  return axiosService.post(`${REACT_APP_API_URL}/v1/api/group`, data);
 };
 
 const getUserList = () => {
-  return axiosService.get(
-    `${REACT_APP_API_URL}/v1/api/admin/info`,
-    authHeader()
-  );
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/admin/info`);
 };
 
 const changeRoleUser = (id, data) => {
   return axiosService.patch(
     `${REACT_APP_API_URL}/v1/api/admin/info/${id}`,
-    data,
-    authHeader()
+    data
+  );
+};
+
+const deleteComment = (groupId, topicId, postId, id) => {
+  return axiosService.delete(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment/${id}`
+  );
+};
+
+const getAllComment = (groupId, topicId, postId) => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment`
+  );
+};
+
+const updateComment = (groupId, topicId, postId, id, data) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment/${id}`,
+    data
+  );
+};
+
+const deleteUser = (id) => {
+  return axiosService.delete(`${REACT_APP_API_URL}/v1/api/admin/info/${id}`);
+};
+
+const deleteGroup = (id) => {
+  return axiosService.delete(`${REACT_APP_API_URL}/v1/api/group/${id}`);
+};
+
+const updateGroup = (id, data) => {
+  return axiosService.patch(`${REACT_APP_API_URL}/v1/api/group/${id}`, data);
+};
+
+const deleteTopic = (groupId, id) => {
+  return axiosService.delete(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${id}`
+  );
+};
+
+const updateTopic = (groupId, id, data) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${id}`,
+    data
+  );
+};
+
+const deletePost = (groupId, topicId, id) => {
+  return axiosService.delete(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${id}`
+  );
+};
+
+const updatePost = (groupId, topicId, id, data) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${id}`,
+    data
   );
 };
 
 export {
+  deleteTopic,
+  updateTopic,
+  deletePost,
+  updatePost,
+  deleteGroup,
+  updateGroup,
+  deleteUser,
+  updateComment,
+  getAllComment,
+  deleteComment,
   changeRoleUser,
   getUserList,
   submitGroup,

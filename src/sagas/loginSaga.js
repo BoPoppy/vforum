@@ -1,5 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import { LOGIN } from '../constants';
+import history from '../common/history';
 import { loginUser } from '../apis';
 import {
   setId,
@@ -27,9 +28,11 @@ function* callSubmit({ email, password }) {
       accessToken: data.result.accessToken,
       refreshToken: data.result.refreshToken,
       userId: data.result.userId,
+      role: data.result.role,
     });
     yield put(setId());
-    yield put(showMessage(2, 'Login successfully'));
+    yield history.push('/vforum');
+    yield window.location.reload();
   }
   yield put(hideLoading());
 }

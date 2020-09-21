@@ -13,11 +13,32 @@ import submitTopic from './submitTopic';
 import singleTopicList from './singleTopicListSaga';
 import submitGroup from './submitGroupSaga';
 import getUserListSaga from './getUserListSaga';
+import changeRoleUserSaga from './changeRoleUserSaga';
+import deleteCommentSaga from './deleteCommentSaga';
+import getAllCommentSaga from './getAllCommentSaga';
+import updateCommentSaga from './updateCommentSaga';
+import deleteUserSaga from './deleteUserSaga';
+import deleteGroupSaga from './deleteGroupSaga';
+import updateGroupSaga from './updateGroupSaga';
+import deleteTopicSaga from './deleteTopicSaga';
+import updateTopicSaga from './updateTopicSaga';
+import deletePostSaga from './deletePostSaga';
+import updatePostSaga from './updatePostSaga';
 
 import { all, fork } from 'redux-saga/effects';
 
 function* rootSaga() {
   yield all([
+    fork(deleteTopicSaga),
+    fork(updateTopicSaga),
+    fork(deletePostSaga),
+    fork(updatePostSaga),
+    fork(deleteGroupSaga),
+    fork(updateGroupSaga),
+    fork(deleteUserSaga),
+    fork(updateCommentSaga),
+    fork(getAllCommentSaga),
+    fork(deleteCommentSaga),
     fork(submitSaga),
     fork(loginSaga),
     fork(getUserSaga),
@@ -33,6 +54,7 @@ function* rootSaga() {
     fork(submitGroup),
     fork(singleTopicList),
     fork(getUserListSaga),
+    fork(changeRoleUserSaga),
   ]);
 }
 

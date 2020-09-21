@@ -17,6 +17,16 @@ import {
   SUBMIT_GROUP,
   GET_USER_LIST,
   UPDATE_ROLE,
+  DELETE_COMMENT,
+  GET_ALL_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_USER,
+  UPDATE_GROUP,
+  DELETE_GROUP,
+  DELETE_TOPIC,
+  UPDATE_TOPIC,
+  DELETE_POST,
+  UPDATE_POST,
 } from '../constants';
 
 const loadId = (email, password) => ({
@@ -24,14 +34,6 @@ const loadId = (email, password) => ({
   email,
   password,
 });
-// const loadId = (email, password) => {
-//   console.log('email, password');
-//   return {
-//     type: LOGIN.LOAD,
-//     email,
-//     password,
-//   };
-// };
 
 const setId = () => ({
   type: LOGIN.LOAD_SUCCESS,
@@ -297,9 +299,258 @@ const updateRoleFailed = (data) => ({
   data,
 });
 
+const updateRoleClear = () => ({
+  type: UPDATE_ROLE.UPDATE_ROLE_CLEAR,
+});
+
+const deleteCommentRequest = (groupId, topicId, postId, id) => ({
+  type: DELETE_COMMENT.DELETE_COMMENT_REQUEST,
+  groupId,
+  topicId,
+  postId,
+  id,
+});
+
+const deleteCommentSuccess = (data) => ({
+  type: DELETE_COMMENT.DELETE_COMMENT_SUCCESS,
+  data,
+});
+
+const deleteCommentFailed = (data) => ({
+  type: DELETE_COMMENT.DELETE_COMMENT_FAILED,
+  data,
+});
+
+const deleteCommentClear = () => ({
+  type: DELETE_COMMENT.DELETE_COMMENT_CLEAR,
+});
+
+const getAllCommentRequest = (groupId, topicId, postId) => ({
+  type: GET_ALL_COMMENT.GET_ALL_COMMENT_REQUEST,
+  groupId,
+  topicId,
+  postId,
+});
+
+const getAllCommentSuccess = (data) => ({
+  type: GET_ALL_COMMENT.GET_ALL_COMMENT_SUCCESS,
+  data,
+});
+
+const getAllCommentFailed = (data) => ({
+  type: GET_ALL_COMMENT.GET_ALL_COMMENT_FAILED,
+  data,
+});
+
+const updateCommentRequest = (groupId, topicId, postId, id, data) => ({
+  type: UPDATE_COMMENT.UPDATE_COMMENT_REQUEST,
+  groupId,
+  topicId,
+  postId,
+  id,
+  data,
+});
+
+const updateCommentSuccess = (data) => ({
+  type: UPDATE_COMMENT.UPDATE_COMMENT_SUCCESS,
+  data,
+});
+
+const updateCommentFailed = (data) => ({
+  type: UPDATE_COMMENT.UPDATE_COMMENT_FAILED,
+  data,
+});
+
+const updateCommentClear = () => ({
+  type: UPDATE_COMMENT.UPDATE_COMMENT_CLEAR,
+});
+
+const deleteUserRequest = (id) => ({
+  type: DELETE_USER.DELETE_USER_REQUEST,
+  id,
+});
+
+const deleteUserSuccess = (data) => ({
+  type: DELETE_USER.DELETE_USER_SUCCESS,
+  data,
+});
+
+const deleteUserFailed = (data) => ({
+  type: DELETE_USER.DELETE_USER_FAILED,
+  data,
+});
+
+const deleteUserClear = () => ({
+  type: DELETE_USER.DELETE_USER_CLEAR,
+});
+
+const deleteGroupRequest = (id) => ({
+  type: DELETE_GROUP.DELETE_GROUP_REQUEST,
+  id,
+});
+
+const deleteGroupSuccess = (data) => ({
+  type: DELETE_GROUP.DELETE_GROUP_SUCCESS,
+  data,
+});
+
+const deleteGroupFailed = (data) => ({
+  type: DELETE_GROUP.DELETE_GROUP_FAILED,
+  data,
+});
+
+const deleteGroupClear = () => ({
+  type: DELETE_GROUP.DELETE_GROUP_CLEAR,
+});
+
+const updateGroupRequest = (id, data) => ({
+  type: UPDATE_GROUP.UPDATE_GROUP_REQUEST,
+
+  id,
+  data,
+});
+
+const updateGroupSuccess = (data) => ({
+  type: UPDATE_GROUP.UPDATE_GROUP_SUCCESS,
+  data,
+});
+
+const updateGroupFailed = (data) => ({
+  type: UPDATE_GROUP.UPDATE_GROUP_FAILED,
+  data,
+});
+
+const updateGroupClear = () => ({
+  type: UPDATE_GROUP.UPDATE_GROUP_CLEAR,
+});
+
+const updateTopicRequest = (groupId, id, data) => ({
+  type: UPDATE_TOPIC.UPDATE_TOPIC_REQUEST,
+  groupId,
+  id,
+  data,
+});
+
+const updateTopicSuccess = (data) => ({
+  type: UPDATE_TOPIC.UPDATE_TOPIC_SUCCESS,
+  data,
+});
+
+const updateTopicFailed = (data) => ({
+  type: UPDATE_TOPIC.UPDATE_TOPIC_FAILED,
+  data,
+});
+
+const updateTopicClear = () => ({
+  type: UPDATE_TOPIC.UPDATE_TOPIC_CLEAR,
+});
+
+const deleteTopicRequest = (groupId, id) => ({
+  type: DELETE_TOPIC.DELETE_TOPIC_REQUEST,
+  groupId,
+  id,
+});
+
+const deleteTopicSuccess = (data) => ({
+  type: DELETE_TOPIC.DELETE_TOPIC_SUCCESS,
+  data,
+});
+
+const deleteTopicFailed = (data) => ({
+  type: DELETE_TOPIC.DELETE_TOPIC_FAILED,
+  data,
+});
+
+const deleteTopicClear = () => ({
+  type: DELETE_TOPIC.DELETE_TOPIC_CLEAR,
+});
+
+const updatePostRequest = (groupId, topicId, id, data) => ({
+  type: UPDATE_POST.UPDATE_POST_REQUEST,
+  groupId,
+  topicId,
+  id,
+  data,
+});
+
+const updatePostSuccess = (data) => ({
+  type: UPDATE_POST.UPDATE_POST_SUCCESS,
+  data,
+});
+
+const updatePostFailed = (data) => ({
+  type: UPDATE_POST.UPDATE_POST_FAILED,
+  data,
+});
+
+const updatePostClear = () => ({
+  type: UPDATE_POST.UPDATE_POST_CLEAR,
+});
+
+const deletePostRequest = (groupId, topicId, id) => ({
+  type: DELETE_POST.DELETE_POST_REQUEST,
+  groupId,
+  topicId,
+  id,
+});
+
+const deletePostSuccess = (data) => ({
+  type: DELETE_POST.DELETE_POST_SUCCESS,
+  data,
+});
+
+const deletePostFailed = (data) => ({
+  type: DELETE_POST.DELETE_POST_FAILED,
+  data,
+});
+
+const deletePostClear = () => ({
+  type: DELETE_POST.DELETE_POST_CLEAR,
+});
+
 export {
+  updatePostClear,
+  updatePostSuccess,
+  updatePostRequest,
+  updatePostFailed,
+  deletePostClear,
+  deletePostSuccess,
+  deletePostRequest,
+  deletePostFailed,
+  updateTopicClear,
+  updateTopicSuccess,
+  updateTopicRequest,
+  updateTopicFailed,
+  deleteTopicClear,
+  deleteTopicSuccess,
+  deleteTopicRequest,
+  deleteTopicFailed,
+  updateGroupClear,
+  updateGroupSuccess,
+  updateGroupRequest,
+  updateGroupFailed,
+  deleteGroupClear,
+  deleteGroupSuccess,
+  deleteGroupRequest,
+  deleteGroupFailed,
+  deleteUserClear,
+  deleteUserFailed,
+  deleteUserRequest,
+  deleteUserSuccess,
+  updateCommentClear,
+  updateCommentSuccess,
+  updateCommentRequest,
+  updateCommentFailed,
+  getAllCommentRequest,
+  getAllCommentSuccess,
+  getAllCommentFailed,
+  deleteCommentClear,
+  deleteCommentRequest,
+  deleteCommentSuccess,
+  deleteCommentFailed,
   updateRoleRequest,
   updateRoleSuccess,
+  updateRoleClear,
   updateRoleFailed,
   submitLogOut,
   getUserListFailed,

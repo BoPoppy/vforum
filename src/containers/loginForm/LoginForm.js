@@ -39,7 +39,7 @@ function SignIn(props) {
   const classes = useStyles();
   const { loadId } = props;
   const { register, handleSubmit, errors } = useForm();
-  const data = localStorage.getItem('storage');
+  const data = localStorage.getItem('userId');
 
   const SubmitData = (data) => {
     const { email, password } = data;

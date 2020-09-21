@@ -19,6 +19,8 @@ import PostsList from './containers/PostsList/PostsList';
 import TopicList from './containers/TopicList';
 import Post from './containers/Post';
 import UserList from './containers/UserList';
+import GroupList from './containers/GroupList';
+import TopicListMod from './containers/TopicListMod';
 
 const useStyles = makeStyles({});
 
@@ -38,6 +40,11 @@ function App() {
           <PrivateRoute path='/event' component={EventPage} />
           <PrivateRoute path='/settings' component={Settings} />
           <PrivateRoute path='/userlist' component={UserList} />
+          <PrivateRoute path='/grouplist' component={GroupList} />
+          <PrivateRoute
+            path='/vforum/group/:id/topiclist'
+            component={TopicListMod}
+          />
           <PrivateRoute
             path='/vforum/group/:id/topic'
             exact

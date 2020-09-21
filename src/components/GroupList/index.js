@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { requestTopicList } from '../../actions';
 import { NavLink } from 'react-router-dom';
+import * as moment from 'moment';
 
 function ViewGroup(props) {
   const { name, createdBy, createdAt, id, requestTopicList, topicList } = props;
@@ -49,7 +50,12 @@ function ViewGroup(props) {
               groupId={id}
               name={name}
               description={description}
-              createdAt={createdAt}
+              createdAt={moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
+                .toDate()
+                .toString()
+                .split(' ')
+                .slice(0, 5)
+                .join(' ')}
               createdBy={createdBy}
             />
           );

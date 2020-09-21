@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Appbar = (props) => {
   const { submitLogOut } = props;
-  const data = getAuthToken('storage');
+  const data = getAuthToken('userId');
   const classes = useStyles();
   const theme = useTheme();
 

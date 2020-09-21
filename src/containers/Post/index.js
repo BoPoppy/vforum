@@ -12,8 +12,11 @@ import Comment from '../../components/Comment';
 import { connect } from 'react-redux';
 import { getPost } from '../../actions';
 import { useForm } from 'react-hook-form';
-import { commentRequest } from '../../actions';
+import { commentRequest, getAllCommentRequest } from '../../actions';
 import ErrorMessage from '../../components/errorMessage';
+import EditPost from './EditPost';
+import DeletePost from './DeletePost';
+import * as moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,12 +70,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Post(props) {
-  const { match, post, getPost, commentRequest } = props;
+  const {
+    match,
+    post,
+    getPost,
+    commentRequest,
+    getAllCommentRequest,
+    allComment,
+  } = props;
   const [checked, setChecked] = React.useState(false);
   const { register, handleSubmit, errors } = useForm();
   const { groupId, topicId, postId } = match.params;
   const {
-    commentsPost,
     countLike,
     countCommentPost,
     createdBy,
@@ -80,12 +89,12 @@ function Post(props) {
     title,
     description,
     createdAt,
-    comment,
   } = post;
 
   useEffect(() => {
     getPost(groupId, topicId, postId);
-  }, [comment]);
+    getAllCommentRequest(groupId, topicId, postId);
+  }, []);
 
   const onSubmit = (data) => {
     const { description } = data;
@@ -116,7 +125,14 @@ function Post(props) {
             </div>
             <Divider />
             <div>{description}</div>
-            <div>{createdAt}</div>
+            <div>
+              {moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
+                .toDate()
+                .toString()
+                .split(' ')
+                .slice(0, 5)
+                .join(' ')}
+            </div>
             <div>
               <Button>Like</Button>
 
@@ -152,10 +168,25 @@ function Post(props) {
                   </div>
                 </Collapse>
               </div>
+              <EditPost
+                title={title}
+                groupId={groupId}
+                topicId={topicId}
+                id={_id}
+                description={description}
+              />
+              <DeletePost
+                title={title}
+                createdBy={createdBy}
+                createdAt={createdAt}
+                groupId={groupId}
+                topicId={topicId}
+                id={_id}
+              />
             </div>
           </Paper>
-          {commentsPost &&
-            commentsPost.map((item, index) => {
+          {allComment &&
+            allComment.map((item, index) => {
               const {
                 countLike,
                 createdBy,
@@ -169,9 +200,16 @@ function Post(props) {
                 <Comment
                   key={index}
                   likes={countLike}
-                  createdAt={createdAt}
+                  createdAt={moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
+                    .toDate()
+                    .toString()
+                    .split(' ')
+                    .slice(0, 5)
+                    .join(' ')}
                   createdBy={createdBy}
                   updated={updatedBy}
+                  groupId={groupId}
+                  topicId={topicId}
                   id={_id}
                   description={description}
                   updatedAt={updatedAt}
@@ -186,9 +224,10 @@ function Post(props) {
   );
 }
 
-const mapStateToProps = ({ post, comment }) => ({
+const mapStateToProps = ({ post, comment, allComment }) => ({
   post,
   comment,
+  allComment,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -196,6 +235,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getPost(groupId, topicId, postId)),
   commentRequest: (groupId, topicId, postId, description) =>
     dispatch(commentRequest(groupId, topicId, postId, description)),
+  getAllCommentRequest: (groupId, topicId, postId) =>
+    dispatch(getAllCommentRequest(groupId, topicId, postId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

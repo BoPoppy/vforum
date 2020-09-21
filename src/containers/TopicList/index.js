@@ -1,27 +1,12 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Grid,
-  Typography,
-  Paper,
-  Button,
-  Modal,
-  Backdrop,
-  Fade,
-  TextField,
-  CircularProgress,
-} from '@material-ui/core';
+import { Grid, Typography, Paper, Button } from '@material-ui/core';
 import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
-import {
-  requestSingleTopicList,
-  submitTopicRequest,
-  submitTopicClear,
-} from '../../actions';
+import { requestSingleTopicList } from '../../actions';
 import ViewTopicList from '../../components/ViewTopicList';
-import ErrorMessage from '../../components/errorMessage';
-import { useForm } from 'react-hook-form';
-import { Alert } from '@material-ui/lab';
+
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,36 +37,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function PostsList(props) {
-  const {
-    singleTopicList,
-    requestSingleTopicList,
-    match,
-    submitTopic,
-    submitTopicRequest,
-    submitTopicClear,
-  } = props;
+  const { singleTopicList, requestSingleTopicList, match } = props;
   const { id } = match.params;
-
-  const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    submitTopicClear();
-    requestSingleTopicList(id);
-    setOpen(false);
-  };
 
   useEffect(() => {
     requestSingleTopicList(id);
   }, []);
-  const onSubmit = (data) => {
-    console.log(data);
-    submitTopicRequest(id, data);
-  };
 
   const classes = useStyles();
   return (
@@ -98,88 +59,13 @@ function PostsList(props) {
               Vforum
             </Typography>
             <div>
-              <Button type='button' onClick={handleOpen}>
+              <Button
+                type='button'
+                component={NavLink}
+                to={`/vforum/group/${id}/topiclist`}
+              >
                 Create Topic
               </Button>
-              <Modal
-                aria-labelledby='transition-modal-title'
-                aria-describedby='transition-modal-description'
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div className={classes.modalPaper}>
-                    <h2 id='transition-modal-title'>Create topic</h2>
-                    <form
-                      className={classes.form}
-                      noValidate
-                      onSubmit={handleSubmit(onSubmit)}
-                    >
-                      <TextField
-                        variant='outlined'
-                        margin='normal'
-                        inputRef={register({
-                          required: 'Required',
-                        })}
-                        fullWidth
-                        name='name'
-                        label='Title'
-                        id='name'
-                      />
-                      {errors.name && (
-                        <ErrorMessage text={errors.name.message} />
-                      )}
-                      <br />
-                      <textarea
-                        ref={register({
-                          required: 'Required',
-                        })}
-                        className={classes.textfield}
-                        name='description'
-                      />
-                      <br />
-                      {errors.description && (
-                        <ErrorMessage text={errors.description.message} />
-                      )}
-
-                      <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        color='primary'
-                        className={classes.submit}
-                      >
-                        Save change
-                      </Button>
-                    </form>
-                    {submitTopic.isLoading === null ? null : (
-                      <div>
-                        {submitTopic.isLoading ? (
-                          <CircularProgress />
-                        ) : (
-                          <div>
-                            {submitTopic.type === 1 ? (
-                              <Alert severity='success'>
-                                {submitTopic.message}
-                              </Alert>
-                            ) : (
-                              <Alert severity='error'>
-                                {submitTopic.message}
-                              </Alert>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </Fade>
-              </Modal>
             </div>
             {singleTopicList &&
               singleTopicList.map((item, key) => {
@@ -209,15 +95,12 @@ function PostsList(props) {
   );
 }
 
-const mapStateToProps = ({ submitTopic, singleTopicList }) => ({
-  submitTopic,
+const mapStateToProps = ({ singleTopicList }) => ({
   singleTopicList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   requestSingleTopicList: (id) => dispatch(requestSingleTopicList(id)),
-  submitTopicRequest: (id, data) => dispatch(submitTopicRequest(id, data)),
-  submitTopicClear: () => dispatch(submitTopicClear()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsList);

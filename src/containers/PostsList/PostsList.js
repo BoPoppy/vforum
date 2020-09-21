@@ -18,6 +18,7 @@ import ViewPostList from '../../components/ViewPostList';
 import ErrorMessage from '../../components/errorMessage';
 import { useForm } from 'react-hook-form';
 import { Alert } from '@material-ui/lab';
+import * as moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -192,7 +193,12 @@ function PostsList(props) {
                   <ViewPostList
                     key={key}
                     title={title}
-                    createdAt={createdAt}
+                    createdAt={moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
+                      .toDate()
+                      .toString()
+                      .split(' ')
+                      .slice(0, 5)
+                      .join(' ')}
                     createdBy={createdBy}
                     postId={_id}
                     likes={countLike}

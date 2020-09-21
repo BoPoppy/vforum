@@ -84,7 +84,7 @@ const SignUp = (props) => {
     console.log({ email, display_name, password, gender });
   };
 
-  const data = localStorage.getItem('storage');
+  const data = localStorage.getItem('userId');
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -245,6 +245,8 @@ const SignUp = (props) => {
                       labelId='demo-simple-select-label'
                       id='demo-simple-select'
                       disabled={data ? true : false}
+                      anchorEl={anchorEl}
+                      keepMounted
                     >
                       <MenuItem value='male'>Male</MenuItem>
                       <MenuItem value='female'>Female</MenuItem>
