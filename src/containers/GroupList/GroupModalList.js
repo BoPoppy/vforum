@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import {
   makeStyles,
@@ -81,7 +81,10 @@ function GroupModalList(props) {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, watch } = useForm();
+
+  const title = useRef({});
+  title.current = watch('name', name);
 
   const handleOpen = () => {
     setOpen(true);
@@ -90,6 +93,9 @@ function GroupModalList(props) {
   };
 
   const handleCloseModal = () => {
+    if (deleteGroup.isLoading === true || updateGroup.isLoading === true) {
+      return null;
+    }
     setOpen(false);
     requestGroupList();
   };
@@ -143,7 +149,8 @@ function GroupModalList(props) {
                 color='primary'
                 disabled={
                   deleteGroup.isLoading === true ||
-                  updateGroup.isLoading === true
+                  updateGroup.isLoading === true ||
+                  title.current === name
                 }
               >
                 Save change

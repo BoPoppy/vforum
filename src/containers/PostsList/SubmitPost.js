@@ -148,6 +148,7 @@ function SubmitPost(props) {
                     color='primary'
                     onClick={() => handleClose()}
                     style={{ width: 100 }}
+                    disabled={submitPost.isLoading}
                   >
                     Exit
                   </Button>
@@ -157,6 +158,7 @@ function SubmitPost(props) {
                     variant='contained'
                     color='secondary'
                     style={{ width: 200 }}
+                    disabled={submitPost.isLoading}
                   >
                     Save change
                   </Button>

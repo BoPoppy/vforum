@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   makeStyles,
   Button,
@@ -76,7 +76,13 @@ function TopicModalList(props) {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, watch } = useForm();
+
+  const title = useRef({});
+  title.current = watch('name', name);
+
+  const desc = useRef({});
+  desc.current = watch('description', description);
 
   const handleOpen = () => {
     setOpen(true);
@@ -156,7 +162,8 @@ function TopicModalList(props) {
                 color='primary'
                 disabled={
                   deleteTopic.isLoading === true ||
-                  updateTopic.isLoading === true
+                  updateTopic.isLoading === true ||
+                  (title.current === name && desc.current === description)
                 }
               >
                 Save change
