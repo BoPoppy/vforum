@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Paper, Divider } from '@material-ui/core';
-import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
 import { getPostList, requestTopic, getGroupRequest } from '../../actions';
 import ViewPostList from '../../components/ViewPostList';
@@ -181,11 +180,7 @@ function PostsList(props) {
             </div>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={3}>
-          <Paper className={classes.paper}>
-            <PopularList />
-          </Paper>
-        </Grid>
+        <Grid item xs={12} sm={12} md={3}></Grid>
       </Grid>
     </div>
   );

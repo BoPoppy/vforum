@@ -21,12 +21,12 @@ function* callSubmit({ email, password, display_name, gender }) {
   });
   const { data } = res;
   console.log(data);
-  if (data.message) {
+  if (data.success === true) {
     yield put(registerSuccess());
     yield put(showMessage(1, data.message));
   } else {
     yield put(registerFail());
-    yield put(showMessage(3, data.error));
+    yield put(showMessage(3, data.message));
   }
 
   yield put(hideLoading());

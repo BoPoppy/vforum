@@ -1,39 +1,54 @@
 import React from 'react';
-import { Paper, Typography, makeStyles, Chip, Button } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import UpdateComment from './UpdateComment';
-import DeleteComment from './DeleteComment';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { getUserRole } from '../../common/auth';
+import { requestLikeComment, requestUnlikeComment } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
   likesCommBtn: {
     fontSize: 14,
+    outline: 'none',
   },
 }));
 
 function Comment(props) {
   const {
     likes,
-    createdAt,
-    createdBy,
-    updated,
-    id,
-    description,
-    updatedAt,
+    likeComment,
+    unlikeComment,
+    requestLikeComment,
+    requestUnlikeComment,
     postId,
     topicId,
     groupId,
+    flags,
+    userId,
+    id,
   } = props;
   const classes = useStyles();
+
+  const liked = flags && flags.find((item) => (item = userId));
+
+  const handleClick = () => {
+    if (likeComment.isLoading === true || unlikeComment.isLoading === true) {
+      return null;
+    } else {
+      if (liked) {
+        requestUnlikeComment(groupId, topicId, postId, id);
+      } else {
+        requestLikeComment(groupId, topicId, postId, id);
+      }
+    }
+  };
 
   return (
     <div>
       <Button
-        aria-label='like'
+        color={liked ? 'secondary' : 'default'}
+        startIcon={liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        onClick={handleClick}
         className={classes.likesCommBtn}
-        startIcon={<FavoriteBorderIcon />}
       >
         {likes}
       </Button>
@@ -41,8 +56,16 @@ function Comment(props) {
   );
 }
 
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = ({ likeComment, unlikeComment }) => ({
+  likeComment,
+  unlikeComment,
+});
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  requestLikeComment: (groupId, topicId, postId, id) =>
+    dispatch(requestLikeComment(groupId, topicId, postId, id)),
+  requestUnlikeComment: (groupId, topicId, postId, id) =>
+    dispatch(requestUnlikeComment(groupId, topicId, postId, id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

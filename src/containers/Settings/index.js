@@ -1,262 +1,172 @@
 import React, { useEffect } from 'react';
-import defaultUser from '../../assets/img/defaultUser.png';
 import {
   Grid,
   Paper,
   makeStyles,
   Typography,
+  Divider,
+  Chip,
   Button,
-  Modal,
-  Backdrop,
-  Fade,
-  TextField,
-  CircularProgress,
 } from '@material-ui/core';
-import ErrorMessage from '../../components/errorMessage';
 import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import {
-  requestInfo,
-  requestChangePassword,
-  refreshChangePassword,
-  getUserListRequest,
-} from '../../actions';
-import { Alert } from '@material-ui/lab';
+import { requestInfo, getUserListRequest } from '../../actions';
+import ChangePassword from './ChangePassword';
+import { NavLink } from 'react-router-dom';
+import { getUserRole } from '../../common/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    paddingTop: theme.spacing(3),
+    backgroundColor: '#efefed',
+    height: '100vh',
   },
   paper: {
     padding: theme.spacing(2),
-
-    color: theme.palette.text.secondary,
+    backgroundColor: '#efefed',
   },
-  icon: {
-    width: 100,
-    backgroundColor: 'grey',
-    marginRight: theme.spacing(2),
-    borderRadius: 50,
-    [theme.breakpoints.down('xs')]: {
-      width: 50,
-    },
+  fieldset: {
+    border: ' 1px solid #d1d1e0',
+    padding: '1rem',
+    borderRadius: '10px',
+    marginBottom: '100px',
   },
-  userIcon: {
+  legend: {
+    width: 'fit-content',
+    paddingLeft: '2px',
+    paddingRight: '2px',
+    margin: 0,
+  },
+  userInfo: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  info: {
     display: 'flex',
+    flexDirection: 'column',
   },
-  modal: {
+  info1: {
     display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  modalPaper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+  info2: { color: 'grey', fontSize: 15 },
+  buttons: { paddingTop: theme.spacing(4) },
+  displayName: {
+    marginBottom: theme.spacing(1),
+    fontSize: 16,
+    fontWeight: 'bold',
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
+  email: {
+    marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
+  gender: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
+  role: {
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    fontSize: 14,
+  },
+  submit: {
+    marginLeft: '5px',
+    marginRight: '5px',
   },
 }));
 
 function Settings(props) {
-  const {
-    requestInfo,
-    userInfo,
-    requestChangePassword,
-    changePassword,
-    refreshChangePassword,
-    getUserListRequest,
-  } = props;
+  const { requestInfo, userInfo } = props;
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    refreshChangePassword();
-    setOpen(false);
-  };
-
   useEffect(() => {
     requestInfo();
   }, []);
 
-  const onSubmit = (data) => {
-    const { oldpassword, newpassword, renewpassword } = data;
-    console.log('change password', oldpassword, newpassword, renewpassword);
-    requestChangePassword(oldpassword, newpassword, renewpassword);
-  };
   return (
-    <div>
+    <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={3}></Grid>
         <Grid item xs={6}>
-          <Paper elevation={3} className={classes.paper}>
-            <div className={classes.userIcon}>
-              <img
-                src={defaultUser}
-                alt='defaultUser'
-                className={classes.icon}
-              />
-              <div>
-                <Typography>{userInfo.display_name}</Typography>
-                <Typography>id: {userInfo.id}</Typography>
+          <Paper elevation={0} className={classes.paper}>
+            <fieldset className={classes.fieldset}>
+              <legend className={classes.legend}>
+                <Typography className={classes.userInfo}>User Info</Typography>
+              </legend>
+              <div className={classes.info}>
+                <div className={classes.info1}>
+                  <Typography className={classes.info2}>
+                    Display Name
+                  </Typography>
+                  <Typography className={classes.displayName}>
+                    {userInfo.display_name}
+                  </Typography>
+                </div>
+                <Divider />
+                <div className={classes.info1}>
+                  <Typography className={classes.info2}>Email</Typography>
+                  <Typography className={classes.email}>
+                    {userInfo.email}
+                  </Typography>
+                </div>
+                <Divider />
+                <div className={classes.info1}>
+                  <Typography className={classes.info2}>Gender</Typography>
+                  <Typography className={classes.gender}>
+                    {userInfo.gender}
+                  </Typography>
+                </div>
+                <Divider />
+                <div className={classes.info1}>
+                  <Typography className={classes.info2}>Role</Typography>
+                  <Chip
+                    label={userInfo.role}
+                    className={classes.role}
+                    size='small'
+                    color={
+                      userInfo.role === 'admin'
+                        ? 'secondary'
+                        : userInfo.role === 'moderator'
+                        ? 'primary'
+                        : 'default'
+                    }
+                  />
+                </div>
               </div>
-            </div>
-            <div>
-              <Grid container>
-                <Grid item xs={6}>
-                  <Typography>Display Name</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>{userInfo.display_name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>Email</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>{userInfo.email}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>Gender</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>{userInfo.gender}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>Role</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>{userInfo.role}</Typography>
-                </Grid>
-              </Grid>
-            </div>
-            <div>
-              <Button type='button' onClick={handleOpen}>
-                change password
-              </Button>
-              <Modal
-                aria-labelledby='transition-modal-title'
-                aria-describedby='transition-modal-description'
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={open}>
-                  <div className={classes.modalPaper}>
-                    <h2 id='transition-modal-title'>Change password</h2>
-                    <form
-                      className={classes.form}
-                      noValidate
-                      onSubmit={handleSubmit(onSubmit)}
-                    >
-                      <TextField
-                        variant='outlined'
-                        margin='normal'
-                        inputRef={register({
-                          required: 'Required',
-                        })}
-                        fullWidth
-                        name='oldpassword'
-                        label='Old Password'
-                        type='password'
-                        id='oldpassword'
-                        error={errors.oldpassword ? true : false}
-                      />
-                      {errors.oldpassword && (
-                        <ErrorMessage text={errors.oldpassword.message} />
-                      )}
+            </fieldset>
 
-                      <TextField
-                        variant='outlined'
-                        margin='normal'
-                        inputRef={register({
-                          required: 'Required',
-                        })}
-                        fullWidth
-                        name='newpassword'
-                        label='New Password'
-                        type='password'
-                        id='newpassword'
-                        error={errors.newpassword ? true : false}
-                      />
-                      {errors.newpassword && (
-                        <ErrorMessage text={errors.newpassword.message} />
-                      )}
-
-                      <TextField
-                        variant='outlined'
-                        margin='normal'
-                        inputRef={register({
-                          required: 'Required',
-                        })}
-                        fullWidth
-                        name='renewpassword'
-                        label='Retype New Password'
-                        type='password'
-                        id='renewpassword'
-                        error={errors.renewpassword ? true : false}
-                      />
-                      {errors.renewpassword && (
-                        <ErrorMessage text={errors.renewpassword.message} />
-                      )}
-
-                      <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        color='primary'
-                        className={classes.submit}
-                      >
-                        Save change
-                      </Button>
-                    </form>
-                    {changePassword.isLoading === 'false' ? null : (
-                      <div>
-                        {changePassword.isLoading === true ? (
-                          <CircularProgress />
-                        ) : (
-                          <div>
-                            {changePassword.type === 1 ? (
-                              <Alert severity='success'>
-                                {changePassword.message}
-                              </Alert>
-                            ) : (
-                              <Alert severity='error'>
-                                {changePassword.message}
-                              </Alert>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </Fade>
-              </Modal>
-            </div>
+            <ChangePassword />
           </Paper>
         </Grid>
         <Grid item xs={3}>
-          <Button
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-            onClick={() => getUserListRequest()}
-          >
-            View user list
-          </Button>
+          <div className={classes.buttons}>
+            {getUserRole() === 'admin' || getUserRole() === 'moderator' ? (
+              <Button
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+                component={NavLink}
+                to={'/userlist'}
+              >
+                View user list
+              </Button>
+            ) : null}
+            {getUserRole() === 'admin' ? (
+              <Button
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+                component={NavLink}
+                to={'/grouplist'}
+              >
+                View grouplist
+              </Button>
+            ) : null}
+          </div>
         </Grid>
       </Grid>
     </div>
@@ -270,9 +180,6 @@ const mapStateToProps = ({ userInfo, changePassword }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   requestInfo: () => dispatch(requestInfo()),
-  requestChangePassword: (oldpassword, newpassword, renewpassword) =>
-    dispatch(requestChangePassword(oldpassword, newpassword, renewpassword)),
-  refreshChangePassword: () => dispatch(refreshChangePassword()),
   getUserListRequest: () => dispatch(getUserListRequest()),
 });
 

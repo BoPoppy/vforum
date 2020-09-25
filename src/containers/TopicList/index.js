@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Paper, Button, Divider } from '@material-ui/core';
-import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
 import { requestSingleTopicList, getGroupRequest } from '../../actions';
 import ViewTopicList from '../../components/ViewTopicList';
 import * as moment from 'moment';
 import { NavLink } from 'react-router-dom';
 import { getUserRole } from '../../common/auth';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   topicList: {
@@ -49,6 +49,12 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.25,
   },
   topicPaper: { marginTop: theme.spacing(1), marginBottom: theme.spacing(1) },
+  button: {
+    color: 'black',
+    '&:hover, &:focus': {
+      color: 'black',
+    },
+  },
 }));
 function PostsList(props) {
   const {
@@ -70,18 +76,8 @@ function PostsList(props) {
   return (
     <div className={classes.topicList}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={4} md={2}>
-          {userRole === 'admin' || userRole === 'moderator' ? (
-            <Button
-              type='button'
-              component={NavLink}
-              to={`/vforum/group/${id}/topiclist`}
-            >
-              Create Topic
-            </Button>
-          ) : null}
-        </Grid>
-        <Grid item xs={12} sm={8} md={7} className={classes.middle}>
+        <Grid item xs={12} sm={4} md={3}></Grid>
+        <Grid item xs={12} sm={8} md={6} className={classes.middle}>
           <Paper elevation={3} className={classes.paper}>
             <div className={classes.groupTitle}>
               <Typography className={classes.groupTitleChild}>
@@ -127,13 +123,21 @@ function PostsList(props) {
                   );
                 })}
             </Paper>
+            {userRole === 'admin' || userRole === 'moderator' ? (
+              <Button
+                type='button'
+                component={NavLink}
+                variant='contained'
+                to={`/vforum/group/${id}/topiclist`}
+                startIcon={<AddIcon />}
+                className={classes.button}
+              >
+                Create Topic
+              </Button>
+            ) : null}
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={3}>
-          <Paper>
-            <PopularList />
-          </Paper>
-        </Grid>
+        <Grid item xs={12} sm={12} md={3}></Grid>
       </Grid>
     </div>
   );

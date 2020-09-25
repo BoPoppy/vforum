@@ -2,7 +2,6 @@ import { GET_TOPIC_LIST } from '../constants';
 const initialState = [];
 
 const reducer = (state = initialState, action) => {
-  var newGroupList = state;
   switch (action.type) {
     case GET_TOPIC_LIST.TOPIC_LIST_SUCCESS:
       const customTopicList = {

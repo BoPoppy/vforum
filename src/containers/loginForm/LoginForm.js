@@ -117,9 +117,6 @@ function SignIn(props) {
             <Alert severity='warning'>you're already login!!</Alert>
           ) : (
             <Grid container>
-              <Grid item xs>
-                <Link to='#'>Forgot password?</Link>
-              </Grid>
               <Grid item>
                 <Link to='/register'> {"Don't have an account? Sign Up"}</Link>
               </Grid>

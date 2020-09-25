@@ -40,12 +40,12 @@ function Vforum(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={4} md={2}>
+        <Grid item xs={12} sm={4} md={3}>
           <Paper elevation={0} className={classes.paper}>
             <AddTopic id={id} />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={8} md={8}>
+        <Grid item xs={12} sm={8} md={6}>
           <Paper elevation={3} className={classes.paper}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label='simple table'>
@@ -92,7 +92,7 @@ function Vforum(props) {
             </TableContainer>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={2}></Grid>
+        <Grid item xs={12} sm={12} md={3}></Grid>
       </Grid>
     </div>
   );

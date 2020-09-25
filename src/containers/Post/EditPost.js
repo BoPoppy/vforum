@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import {
   makeStyles,
@@ -22,19 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    color: theme.palette.text.secondary,
-  },
-  icon: {
-    width: 100,
-    backgroundColor: 'grey',
-    marginRight: theme.spacing(2),
-    borderRadius: 50,
-    [theme.breakpoints.down('xs')]: {
-      width: 50,
-    },
-  },
-  userIcon: {
-    display: 'flex',
   },
   modal: {
     display: 'flex',
@@ -42,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   modalPaper: {
+    width: '50%',
+    height: '50%',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -51,9 +40,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  button: { display: 'flex', justifyContent: 'space-around' },
   textfield: {
-    width: '40%',
-    height: '100px',
+    width: '100%',
+    height: '200px',
     padding: '10px',
     backgroundColor: '#d0e2bc',
     border: '3px dashed #8ebf42',
@@ -75,7 +65,12 @@ function PostModalList(props) {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, watch } = useForm();
+  const newName = useRef({});
+  newName.current = watch('title', title);
+
+  const newDes = useRef({});
+  newDes.current = watch('description', description);
 
   const handleOpen = () => {
     setOpen(true);
@@ -121,6 +116,10 @@ function PostModalList(props) {
                 margin='normal'
                 inputRef={register({
                   required: 'Required',
+                  minLength: {
+                    value: 3,
+                    message: 'The title must be longer than 3 characters',
+                  },
                 })}
                 fullWidth
                 name='title'
@@ -133,6 +132,10 @@ function PostModalList(props) {
               <textarea
                 ref={register({
                   required: 'Required',
+                  minLength: {
+                    value: 3,
+                    message: 'The title must be longer than 3 characters',
+                  },
                 })}
                 className={classes.textfield}
                 name='description'
@@ -140,15 +143,25 @@ function PostModalList(props) {
               />
 
               <br />
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                color='primary'
-                disabled={updatePost.isLoading === true}
-              >
-                Save change
-              </Button>
+              <div className={classes.button}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={() => handleCloseModal()}
+                  style={{ width: 100 }}
+                >
+                  Exit
+                </Button>
+
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='secondary'
+                  style={{ width: 200 }}
+                >
+                  Save change
+                </Button>
+              </div>
             </form>
             {updatePost.isLoading === 'false' ? null : (
               <div>
@@ -179,9 +192,7 @@ const mapStateToProps = ({ updatePost }) => ({
 const mapDispatchToProps = (dispatch) => ({
   updatePostRequest: (groupId, topicId, id, data) =>
     dispatch(updatePostRequest(groupId, topicId, id, data)),
-
   updatePostClear: () => dispatch(updatePostClear()),
-
   getPost: (groupId, topicId, postId) =>
     dispatch(getPost(groupId, topicId, postId)),
 });

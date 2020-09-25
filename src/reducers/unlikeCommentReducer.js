@@ -1,4 +1,4 @@
-import { SUBMIT_UNLIKE } from '../constants';
+import { UNLIKE_COMMENT } from '../constants';
 const initialState = {
   isLoading: null,
   type: 0,
@@ -7,26 +7,26 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUBMIT_UNLIKE.SUBMIT_UNLIKE_SUCCESS:
+    case UNLIKE_COMMENT.UNLIKE_COMMENT_SUCCESS:
       return {
         ...state,
         isLoading: false,
         type: 1,
         data: action.data,
       };
-    case SUBMIT_UNLIKE.SUBMIT_UNLIKE_REQUEST:
+    case UNLIKE_COMMENT.UNLIKE_COMMENT_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    case SUBMIT_UNLIKE.SUBMIT_UNLIKE_FAILED:
+    case UNLIKE_COMMENT.UNLIKE_COMMENT_FAILED:
       return {
         ...state,
         type: 2,
         isLoading: false,
         data: action.data,
       };
-    case SUBMIT_UNLIKE.SUBMIT_UNLIKE_CLEAR:
+    case UNLIKE_COMMENT.UNLIKE_COMMENT_CLEAR:
       return {
         ...state,
         isLoading: null,

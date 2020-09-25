@@ -232,6 +232,7 @@ function Post(props) {
                 description,
                 createdAt,
                 updatedAt,
+                flags,
               } = item;
               return (
                 <Comment
@@ -251,6 +252,8 @@ function Post(props) {
                   description={description}
                   updatedAt={updatedAt}
                   postId={postId}
+                  flags={flags}
+                  userId={userId}
                 />
               );
             })}

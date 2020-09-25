@@ -169,7 +169,21 @@ const submitUnlikePost = (groupId, topicId, postId) => {
   );
 };
 
+const likeComment = (groupId, topicId, postId, id) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment/${id}/addlike`
+  );
+};
+
+const unlikeComment = (groupId, topicId, postId, id) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/comment/${id}/minuslike`
+  );
+};
+
 export {
+  likeComment,
+  unlikeComment,
   submitUnlikePost,
   submitLikePost,
   getTopic,

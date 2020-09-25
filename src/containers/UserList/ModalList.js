@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import {
   makeStyles,
@@ -20,7 +20,7 @@ import {
   getUserListRequest,
   updateRoleClear,
   deleteUserRequest,
-  deleteCommentClear,
+  deleteUserClear,
 } from '../../actions';
 import { Alert } from '@material-ui/lab';
 
@@ -75,18 +75,20 @@ function Settings(props) {
     updateRoleRequest,
     getUserListRequest,
     deleteUserRequest,
-    deleteCommentClear,
+    deleteUserClear,
     deleteUser,
   } = props;
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, errors, control } = useForm();
+  const { handleSubmit, errors, control, watch } = useForm();
+  const newRole = useRef({});
+  newRole.current = watch('newRole', role);
 
   const handleOpen = () => {
     setOpen(true);
     updateRoleClear();
-    deleteCommentClear();
+    deleteUserClear();
   };
 
   const handleCloseModal = () => {
@@ -117,7 +119,7 @@ function Settings(props) {
       >
         <Fade in={open}>
           <div className={classes.modalPaper}>
-            <h2 id='transition-modal-title'>EDIT / DELETE</h2>
+            <h2 id='transition-modal-title'>EDIT</h2>
             <form
               className={classes.form}
               noValidate
@@ -150,7 +152,9 @@ function Settings(props) {
                 variant='contained'
                 color='primary'
                 disabled={
-                  deleteUser.isLoading === true || changeRole.isLoading === true
+                  deleteUser.isLoading === true ||
+                  changeRole.isLoading === true ||
+                  newRole.current === role
                 }
               >
                 Save change
@@ -171,6 +175,7 @@ function Settings(props) {
                 )}
               </div>
             )}
+            <h2 id='transition-modal-title'>OR</h2>
             <Button
               variant='contained'
               color='secondary'
@@ -213,7 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
   getUserListRequest: () => dispatch(getUserListRequest()),
   updateRoleClear: () => dispatch(updateRoleClear()),
   deleteUserRequest: (id) => dispatch(deleteUserRequest(id)),
-  deleteCommentClear: () => dispatch(deleteCommentClear()),
+  deleteUserClear: () => dispatch(deleteUserClear()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

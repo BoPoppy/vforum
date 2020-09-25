@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Paper } from '@material-ui/core';
 import GroupList from '../../components/GroupList';
-import PopularList from '../../components/PopularList';
 import { connect } from 'react-redux';
 import { requestGroupList } from '../../actions';
 import * as moment from 'moment';
@@ -58,11 +57,7 @@ function Vforum(props) {
             })}
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={12} md={3}>
-          <Paper className={classes.paper}>
-            <PopularList />
-          </Paper>
-        </Grid>
+        <Grid item xs={12} sm={12} md={3}></Grid>
       </Grid>
     </div>
   );

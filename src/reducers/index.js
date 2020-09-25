@@ -31,6 +31,8 @@ import getGroup from './getGroupReducer';
 import getTopic from './getTopicReducer';
 import submitLikePost from './submitLikeReducer';
 import submitUnlikePost from './submitUnlikeReducer';
+import likeComment from './likeCommentReducer';
+import unlikeComment from './unlikeCommentReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -65,6 +67,8 @@ const rootReducer = combineReducers({
   getTopic: getTopic,
   submitLikePost: submitLikePost,
   submitUnlikePost: submitUnlikePost,
+  likeComment: likeComment,
+  unlikeComment: unlikeComment,
 });
 
 export default rootReducer;

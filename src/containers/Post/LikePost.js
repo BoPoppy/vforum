@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { requestSubmitLike, requestUnlikePost } from '../../actions';
@@ -26,7 +26,15 @@ function Post(props) {
   } = props;
 
   const liked = flags && flags.find((item) => (item = userId));
+  const [state, setstate] = useState(false);
 
+  useEffect(() => {
+    if (liked) {
+      setstate(true);
+    } else {
+      setstate(false);
+    }
+  }, [liked]);
   const handleClick = () => {
     if (
       submitLikePost.isLoading === true ||
@@ -36,8 +44,10 @@ function Post(props) {
     } else {
       if (liked) {
         requestUnlikePost(groupId, topicId, postId);
+        setstate(false);
       } else {
         requestSubmitLike(groupId, topicId, postId);
+        setstate(true);
       }
     }
   };
@@ -46,9 +56,9 @@ function Post(props) {
   return (
     <div className={classes.root}>
       <Button
-        variant={liked ? 'contained' : 'outlined'}
+        variant={state ? 'contained' : 'outlined'}
         color='secondary'
-        startIcon={liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        startIcon={state ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         onClick={handleClick}
       >
         {countLike} likes

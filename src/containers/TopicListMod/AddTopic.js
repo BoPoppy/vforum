@@ -17,13 +17,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  textfield: {
-    width: '40%',
-    height: '100px',
-    padding: '10px',
-    backgroundColor: '#d0e2bc',
-    border: '3px dashed #8ebf42',
-  },
+  textfield: {},
 }));
 
 function AddGroup(props) {
@@ -56,12 +50,16 @@ function AddGroup(props) {
         />
         {errors.name && <ErrorMessage text={errors.name.message} />}
         <br />
-        <textarea
-          ref={register({
+        <TextField
+          inputRef={register({
             required: 'Required',
           })}
+          margin='normal'
+          variant='outlined'
           className={classes.textfield}
           name='description'
+          fullWidth
+          label='Description'
         />
         <br />
         {errors.description && (

@@ -30,6 +30,8 @@ import {
   UPDATE_POST,
   REQUEST_TOPIC,
   SUBMIT_UNLIKE,
+  LIKE_COMMENT,
+  UNLIKE_COMMENT,
 } from '../constants';
 
 const loadId = (email, password) => ({
@@ -584,7 +586,59 @@ const clearUnlikePost = () => ({
   type: SUBMIT_UNLIKE.SUBMIT_UNLIKE_CLEAR,
 });
 
+const requestLikeComment = (groupId, topicId, postId, id) => ({
+  type: LIKE_COMMENT.LIKE_COMMENT_REQUEST,
+  groupId,
+  topicId,
+  postId,
+  id,
+});
+
+const successLikeComment = (data) => ({
+  type: LIKE_COMMENT.LIKE_COMMENT_SUCCESS,
+  data,
+});
+
+const failedLikeComment = (data) => ({
+  type: LIKE_COMMENT.LIKE_COMMENT_FAILED,
+  data,
+});
+
+const clearLikeComment = () => ({
+  type: LIKE_COMMENT.LIKE_COMMENT_CLEAR,
+});
+
+const requestUnlikeComment = (groupId, topicId, postId, id) => ({
+  type: UNLIKE_COMMENT.UNLIKE_COMMENT_REQUEST,
+  groupId,
+  topicId,
+  postId,
+  id,
+});
+
+const successUnlikeComment = (data) => ({
+  type: UNLIKE_COMMENT.UNLIKE_COMMENT_SUCCESS,
+  data,
+});
+
+const failedUnlikeComment = (data) => ({
+  type: UNLIKE_COMMENT.UNLIKE_COMMENT_FAILED,
+  data,
+});
+
+const clearUnlikeComment = () => ({
+  type: UNLIKE_COMMENT.UNLIKE_COMMENT_CLEAR,
+});
+
 export {
+  requestLikeComment,
+  successLikeComment,
+  failedLikeComment,
+  clearLikeComment,
+  requestUnlikeComment,
+  successUnlikeComment,
+  failedUnlikeComment,
+  clearUnlikeComment,
   clearSubmitLike,
   clearUnlikePost,
   requestUnlikePost,

@@ -7,7 +7,7 @@ import ErrorMessage from '../../components/errorMessage';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    backgroundColor: '#e3e3e3',
+    backgroundColor: '#f0f0f5',
     borderRadius: '15px',
     padding: theme.spacing(2),
     marginBottom: '90px',
@@ -16,19 +16,18 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100px',
 
-    backgroundColor: '#e3e3e3',
+    backgroundColor: '#f0f0f5',
     border: 'none',
     resize: 'none',
     outline: 'none',
   },
   submit: {
-    justifyContent: 'flex-end',
+    paddingTop: theme.spacing(1),
   },
 }));
 
 function Post(props) {
   const { commentRequest, groupId, topicId, postId } = props;
-  const [checked, setChecked] = React.useState(false);
   const { register, handleSubmit, errors, watch } = useForm();
   const password = useRef({});
   password.current = watch('description', '');
@@ -36,10 +35,6 @@ function Post(props) {
   const onSubmit = (data) => {
     const { description } = data;
     commentRequest(groupId, topicId, postId, description);
-  };
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
   };
 
   const classes = useStyles();
@@ -52,7 +47,10 @@ function Post(props) {
             rowsMax={4}
             className={classes.textfield}
             ref={register({
-              required: 'Required',
+              minLength: {
+                value: 3,
+                message: 'The comment must be longer than 3 characters',
+              },
             })}
             name='description'
             placeholder='Enter your comment here...'
@@ -61,6 +59,7 @@ function Post(props) {
           {errors.description && (
             <ErrorMessage text={errors.description.message} />
           )}
+          <br />
           <Button
             type='submit'
             variant='contained'

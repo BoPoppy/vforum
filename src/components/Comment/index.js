@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Typography, makeStyles, Chip, Button } from '@material-ui/core';
+import { Paper, Typography, makeStyles, Chip } from '@material-ui/core';
 import { connect } from 'react-redux';
 import UpdateComment from './UpdateComment';
 import DeleteComment from './DeleteComment';
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    backgroundColor: '#e3e3e3',
+    backgroundColor: '#f0f0f5',
     borderRadius: '15px',
   },
   info: {
@@ -59,11 +59,12 @@ function Comment(props) {
     updated,
     id,
     description,
-    updatedAt,
+    //updatedAt,
     postId,
     topicId,
     groupId,
     userId,
+    flags,
   } = props;
   const classes = useStyles();
 
@@ -103,6 +104,8 @@ function Comment(props) {
           postId={postId}
           id={id}
           likes={likes}
+          flags={flags}
+          userId={getUserId()}
         />
         {getUserId() === userId ? (
           <UpdateComment
@@ -134,8 +137,8 @@ function Comment(props) {
   );
 }
 
-const mapStateToProps = ({}) => ({});
+//const mapStateToProps = ({}) => ({});
 
 const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comment);
+export default connect(null, mapDispatchToProps)(Comment);

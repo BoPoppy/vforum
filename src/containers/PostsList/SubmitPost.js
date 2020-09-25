@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  openButton: {},
   textfield: {
     width: '100%',
     height: '200px',
@@ -43,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     display: 'flex',
+    justifyContent: 'space-around',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  res: {
+    paddingBottom: theme.spacing(2),
   },
 }));
 function SubmitPost(props) {
@@ -67,7 +72,6 @@ function SubmitPost(props) {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     submitPostRequest(groupId, topicId, data);
   };
 
@@ -79,8 +83,6 @@ function SubmitPost(props) {
           onClick={handleOpen}
           variant='contained'
           color='default'
-          className={classes.openButton}
-          className={classes.button}
           startIcon={<AddIcon />}
         >
           create post
@@ -104,12 +106,17 @@ function SubmitPost(props) {
                 className={classes.form}
                 noValidate
                 onSubmit={handleSubmit(onSubmit)}
+                id='myForm'
               >
                 <TextField
                   variant='outlined'
                   margin='normal'
                   inputRef={register({
                     required: 'Required',
+                    minLength: {
+                      value: 3,
+                      message: 'The title must be longer than 3 characters',
+                    },
                   })}
                   fullWidth
                   name='title'
@@ -122,6 +129,11 @@ function SubmitPost(props) {
                   placeholder='Type in the description...'
                   ref={register({
                     required: 'Required',
+                    minLength: {
+                      value: 3,
+                      message:
+                        'The description must be longer than 3 characters',
+                    },
                   })}
                   className={classes.textfield}
                   name='description'
@@ -131,25 +143,27 @@ function SubmitPost(props) {
                   <ErrorMessage text={errors.description.message} />
                 )}
                 <div className={classes.button}>
-                  <Button variant='contained' color='primary' fullWidth>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => handleClose()}
+                    style={{ width: 100 }}
+                  >
                     Exit
-                  </Button>
-                  <Button variant='contained' color='primary' fullWidth>
-                    Clear
                   </Button>
 
                   <Button
                     type='submit'
                     variant='contained'
-                    color='primary'
-                    fullWidth
+                    color='secondary'
+                    style={{ width: 200 }}
                   >
                     Save change
                   </Button>
                 </div>
               </form>
               {submitPost.isLoading === null ? null : (
-                <div>
+                <div className={classes.res}>
                   {submitPost.isLoading ? (
                     <CircularProgress />
                   ) : (

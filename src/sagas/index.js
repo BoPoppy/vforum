@@ -28,11 +28,15 @@ import getGroupSaga from './getGroupSaga';
 import getTopicSaga from './getTopicSaga';
 import submitLikePostSaga from './submitLikePostSaga';
 import submitUnlikePostSga from './submitUnlikePostSaga';
+import unlikeCommentSaga from './unlikeCommentSaga';
+import likeCommentSaga from './likeCommentSaga';
 
 import { all, fork } from 'redux-saga/effects';
 
 function* rootSaga() {
   yield all([
+    fork(unlikeCommentSaga),
+    fork(likeCommentSaga),
     fork(submitUnlikePostSga),
     fork(submitLikePostSaga),
     fork(getTopicSaga),

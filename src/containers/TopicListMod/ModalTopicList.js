@@ -56,13 +56,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  textfield: {
-    width: '40%',
-    height: '100px',
-    padding: '10px',
-    backgroundColor: '#d0e2bc',
-    border: '3px dashed #8ebf42',
-  },
+  textfield: {},
 }));
 
 function TopicModalList(props) {
@@ -118,7 +112,7 @@ function TopicModalList(props) {
       >
         <Fade in={open}>
           <div className={classes.modalPaper}>
-            <h2 id='transition-modal-title'>EDIT / DELETE</h2>
+            <h2 id='transition-modal-title'>EDIT</h2>
             <form
               className={classes.form}
               noValidate
@@ -138,12 +132,17 @@ function TopicModalList(props) {
               />
               {errors.name && <ErrorMessage text={errors.name.message} />}
               <br />
-              <textarea
-                ref={register({
+              <TextField
+                inputRef={register({
                   required: 'Required',
                 })}
+                margin='normal'
+                variant='outlined'
                 className={classes.textfield}
                 name='description'
+                fullWidth
+                id='description'
+                label='Description'
                 defaultValue={description}
               />
               <br />
@@ -178,6 +177,7 @@ function TopicModalList(props) {
                 )}
               </div>
             )}
+            <h2 id='transition-modal-title'>OR</h2>
             <Button
               variant='contained'
               color='secondary'
