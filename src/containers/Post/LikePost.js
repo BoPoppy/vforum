@@ -25,7 +25,7 @@ function Post(props) {
     submitUnlikePost,
   } = props;
 
-  const liked = flags && flags.find((item) => (item = userId));
+  const liked = flags && flags.find((item) => item === userId);
   const [state, setstate] = useState(false);
 
   useEffect(() => {

@@ -28,8 +28,9 @@ function Comment(props) {
   } = props;
   const classes = useStyles();
 
-  const liked = flags && flags.find((item) => (item = userId));
+  const liked = flags && flags.find((item) => item === userId);
 
+  console.log(liked);
   const handleClick = () => {
     if (likeComment.isLoading === true || unlikeComment.isLoading === true) {
       return null;
