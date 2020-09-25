@@ -1,49 +1,53 @@
 import React from 'react';
-import {
-  Paper,
-  Typography,
-  Button,
-  Modal,
-  Backdrop,
-  makeStyles,
-  Fade,
-  CircularProgress,
-} from '@material-ui/core';
-
+import { Paper, Typography, makeStyles, Chip, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { deleteCommentRequest, deleteCommentClear } from '../../actions';
-import { Alert } from '@material-ui/lab';
 import UpdateComment from './UpdateComment';
+import DeleteComment from './DeleteComment';
+import { getUserRole, getUserId } from '../../common/auth';
+import LikeComment from './LikeComment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(2),
-
-    color: theme.palette.text.secondary,
+    backgroundColor: '#e3e3e3',
+    borderRadius: '15px',
   },
-
-  modal: {
+  info: {
+    display: 'flex',
+  },
+  info1: {
+    flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  modalPaper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+  username: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+  info2: {
+    fontSize: 13,
+    color: 'grey',
+    fontStyle: 'italic',
   },
-  formControl: {
-    maxHeight: 70,
-    minWidth: 120,
+  userRole: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    fontSize: 12,
+    fontStyle: 'italic',
+  },
+  edited: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    color: 'grey',
+  },
+  desc: {
+    fontSize: 15,
+    paddingTop: theme.spacing(1.5),
+    paddingBottom: theme.spacing(1.5),
   },
 }));
 
@@ -59,110 +63,79 @@ function Comment(props) {
     postId,
     topicId,
     groupId,
-    deleteComment,
-    deleteCommentRequest,
-    deleteCommentClear,
+    userId,
   } = props;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-    deleteCommentClear();
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
 
   return (
-    <div>
-      <Paper>
-        <Typography>{createdBy}</Typography>
-        <Typography>{description}</Typography>
-        <Typography>{createdAt}</Typography>
-        <div>
-          <Button type='button' onClick={handleOpen}>
-            delete
-          </Button>
-          <Modal
-            aria-labelledby='transition-modal-title'
-            aria-describedby='transition-modal-description'
-            className={classes.modal}
-            open={open}
-            onClose={handleCloseModal}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.modalPaper}>
-                <h2 id='transition-modal-title'>DELETE COMMENT</h2>
-
-                <Typography> Are you sure to delete this comment?</Typography>
-                <Paper elevation={1}>
-                  <Typography>{createdBy}</Typography>
-                  <Typography>{description}</Typography>
-                  <Typography>{createdAt}</Typography>
-                </Paper>
-                <Button variant='contained' onClick={handleCloseModal}>
-                  Exit
-                </Button>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={() =>
-                    deleteCommentRequest(groupId, topicId, postId, id)
-                  }
-                >
-                  delete
-                </Button>
-
-                {deleteComment.isLoading === 'false' ? null : (
-                  <div>
-                    {deleteComment.isLoading === true ? (
-                      <CircularProgress />
-                    ) : (
-                      <div>
-                        {deleteComment.type === 1 ? (
-                          <Alert severity='success'>
-                            {deleteComment.message}
-                          </Alert>
-                        ) : (
-                          <Alert severity='error'>
-                            {deleteComment.message}
-                          </Alert>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
+    <div className={classes.root}>
+      <Paper elevation={0} className={classes.paper}>
+        <div className={classes.info}>
+          <div className={classes.info1}>
+            <Typography className={classes.username}>{createdBy}</Typography>
+            <Chip
+              color={
+                getUserRole() === 'admin'
+                  ? 'secondary'
+                  : getUserRole() === 'moderator'
+                  ? 'primary'
+                  : 'default'
+              }
+              size='small'
+              label={getUserRole()}
+              className={classes.userRole}
+            />
+            {updated === true ? (
+              <div>
+                <Typography className={classes.edited}>(edited)</Typography>
               </div>
-            </Fade>
-          </Modal>
+            ) : null}
+          </div>
+
+          <Typography className={classes.info2}>{createdAt}</Typography>
         </div>
-        <UpdateComment
-          description={description}
+        <Typography className={classes.desc}>{description}</Typography>
+      </Paper>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <LikeComment
           groupId={groupId}
           topicId={topicId}
           postId={postId}
           id={id}
+          likes={likes}
         />
-      </Paper>
+        {getUserId() === userId ? (
+          <UpdateComment
+            description={description}
+            groupId={groupId}
+            topicId={topicId}
+            postId={postId}
+            id={id}
+          />
+        ) : null}
+
+        {getUserRole() === 'admin' ||
+        getUserRole() === 'moderator' ||
+        getUserId() === userId ? (
+          <div>
+            <DeleteComment
+              groupId={groupId}
+              postId={postId}
+              topicId={topicId}
+              id={id}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              description={description}
+            />
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
 
-const mapStateToProps = ({ deleteComment }) => ({
-  deleteComment,
-});
+const mapStateToProps = ({}) => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteCommentRequest: (groupId, topicId, postId, id) =>
-    dispatch(deleteCommentRequest(groupId, topicId, postId, id)),
-  deleteCommentClear: () => dispatch(deleteCommentClear()),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

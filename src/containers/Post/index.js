@@ -4,68 +4,82 @@ import {
   Paper,
   makeStyles,
   Typography,
-  Button,
   Divider,
-  Collapse,
+  Breadcrumbs,
 } from '@material-ui/core';
 import Comment from '../../components/Comment';
 import { connect } from 'react-redux';
-import { getPost } from '../../actions';
-import { useForm } from 'react-hook-form';
-import { commentRequest, getAllCommentRequest } from '../../actions';
-import ErrorMessage from '../../components/errorMessage';
+import {
+  getAllCommentRequest,
+  getPost,
+  getGroupRequest,
+  requestTopic,
+} from '../../actions';
+import CommentSubmit from './CommentSubmit';
 import EditPost from './EditPost';
 import DeletePost from './DeletePost';
 import * as moment from 'moment';
+import HomeIcon from '@material-ui/icons/Home';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import ToysIcon from '@material-ui/icons/Toys';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { NavLink } from 'react-router-dom';
+import LikePost from './LikePost';
+import { getUserId, getUserRole } from '../../common/auth';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-
   paper: {
     padding: theme.spacing(2),
-    color: theme.palette.text.secondary,
+    marginBottom: theme.spacing(3),
   },
-  icon: {
-    width: 100,
-    backgroundColor: 'grey',
-    marginRight: theme.spacing(2),
-    borderRadius: 50,
-    [theme.breakpoints.down('xs')]: {
-      width: 50,
+  postTitle: {
+    fontSize: '34px',
+    letterSpacing: '1px',
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+  },
+  navLink: {
+    display: 'flex',
+    fontSize: 14,
+    color: '#005673',
+    textTransform: 'capitalize',
+    '&:hover, &:focus': {
+      color: '#005673',
     },
   },
-  userIcon: {
+  info: { paddingBottom: theme.spacing(3) },
+  info1: {
     display: 'flex',
-    justifyContent: 'space-between',
   },
-  modal: {
+  icon: {
+    marginRight: theme.spacing(0.5),
+    width: 20,
+    height: 20,
+  },
+  postBy: {
+    fontSize: 14,
+    color: 'grey',
+  },
+  postBy1: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  atComm: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  Comm: {
+    fontSize: 14,
+  },
+  desp: {
+    fontSize: 20,
+    paddingBottom: theme.spacing(3),
+  },
+  infoButton: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalPaper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  polygon: {},
-  label: {
-    margin: 0,
-  },
-  commentBtn: {},
-  textfield: {
-    width: '40%',
-    height: '100px',
-    padding: '10px',
-    backgroundColor: '#d0e2bc',
-    border: '3px dashed #8ebf42',
+    paddingTop: theme.spacing(3),
   },
 }));
 
@@ -74,12 +88,13 @@ function Post(props) {
     match,
     post,
     getPost,
-    commentRequest,
     getAllCommentRequest,
     allComment,
+    getGroupRequest,
+    requestTopic,
+    getGroup,
+    getTopic,
   } = props;
-  const [checked, setChecked] = React.useState(false);
-  const { register, handleSubmit, errors } = useForm();
   const { groupId, topicId, postId } = match.params;
   const {
     countLike,
@@ -89,108 +104,130 @@ function Post(props) {
     title,
     description,
     createdAt,
+    userId,
+    flags,
   } = post;
 
   useEffect(() => {
     getPost(groupId, topicId, postId);
     getAllCommentRequest(groupId, topicId, postId);
+    getGroupRequest(groupId);
+    requestTopic(groupId, topicId);
   }, []);
 
-  const onSubmit = (data) => {
-    const { description } = data;
-
-    commentRequest(groupId, topicId, postId, description);
-  };
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
+  function handleClick(event) {
+    event.preventDefault();
+  }
 
   const classes = useStyles();
   return (
     <div>
-      <Grid container spacing={3}>
+      <Grid container style={{ paddingTop: '80px' }}>
         <Grid item xs={3}></Grid>
         <Grid item xs={6}>
-          <Paper elevation={3} className={classes.paper}>
-            <div className={classes.userIcon}>
-              <div>
-                <Typography>{title}</Typography>
-                <Typography> {createdBy}</Typography>
+          <Paper elevation={1} className={classes.paper}>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize='small' />}
+              aria-label='breadcrumb'
+            >
+              <Typography
+                component={NavLink}
+                className={classes.navLink}
+                to={`/vforum`}
+                onClick={handleClick}
+              >
+                <HomeIcon className={classes.icon} />
+                Vforum
+              </Typography>
+              <Typography
+                component={NavLink}
+                className={classes.navLink}
+                to={`/vforum/group/${groupId}/topic`}
+                onClick={handleClick}
+              >
+                <WhatshotIcon className={classes.icon} />
+                {getGroup.name}
+              </Typography>
+              <Typography
+                component={NavLink}
+                className={classes.navLink}
+                to={`/vforum/group/${groupId}/topic/${topicId}/post`}
+                onClick={handleClick}
+              >
+                <ToysIcon className={classes.icon} />
+                {getTopic.name}
+              </Typography>
+            </Breadcrumbs>
+
+            <Typography className={classes.postTitle}>{title}</Typography>
+            <div className={classes.info}>
+              <div className={classes.info1}>
+                <Typography className={classes.postBy}>By:&nbsp;</Typography>
+                <Typography className={classes.postBy1}>{createdBy}</Typography>
               </div>
-              <div>
-                <Typography>Likes: {countLike}</Typography>
-                <Typography> Comments: {countCommentPost}</Typography>
+              <div className={classes.info1}>
+                <Typography className={classes.atComm}>
+                  {moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
+                    .toDate()
+                    .toString()
+                    .split(' ')
+                    .slice(0, 5)
+                    .join(' ')}
+                  ,&nbsp;
+                </Typography>
+                <Typography className={classes.Comm}>
+                  Comments:&nbsp;
+                </Typography>
+                <Typography className={classes.atComm}>
+                  {countCommentPost}
+                </Typography>
               </div>
             </div>
-            <Divider />
-            <div>{description}</div>
-            <div>
-              {moment(createdAt, 'YYYY-MM-DDTHH:mm:ssZ')
-                .toDate()
-                .toString()
-                .split(' ')
-                .slice(0, 5)
-                .join(' ')}
-            </div>
-            <div>
-              <Button>Like</Button>
-
-              <Button onClick={handleChange} className={classes.commentBtn}>
-                Comment
-              </Button>
-
-              <div className={classes.container}>
-                <Collapse in={checked}>
-                  <div className={classes.svg}>
-                    <form noValidate onSubmit={handleSubmit(onSubmit)}>
-                      <textarea
-                        ref={register({
-                          required: 'Required',
-                        })}
-                        className={classes.textfield}
-                        name='description'
-                      />
-
-                      <br />
-                      {errors.description && (
-                        <ErrorMessage text={errors.description.message} />
-                      )}
-                      <Button
-                        type='submit'
-                        variant='contained'
-                        color='primary'
-                        className={classes.submit}
-                      >
-                        Submit
-                      </Button>
-                    </form>
-                  </div>
-                </Collapse>
-              </div>
-              <EditPost
-                title={title}
+            <Typography className={classes.desp}>{description}</Typography>
+            <Divider variant='middle' />
+            <div className={classes.infoButton}>
+              <LikePost
                 groupId={groupId}
                 topicId={topicId}
-                id={_id}
-                description={description}
+                postId={postId}
+                countLike={countLike}
+                userId={getUserId()}
+                flags={flags}
               />
-              <DeletePost
-                title={title}
-                createdBy={createdBy}
-                createdAt={createdAt}
-                groupId={groupId}
-                topicId={topicId}
-                id={_id}
-              />
+              {getUserId() === userId ? (
+                <div>
+                  <EditPost
+                    title={title}
+                    groupId={groupId}
+                    topicId={topicId}
+                    id={_id}
+                    description={description}
+                  />
+                </div>
+              ) : null}
+              {getUserRole() === 'admin' ||
+              getUserRole() === 'moderator' ||
+              getUserId() === userId ? (
+                <div>
+                  <DeletePost
+                    title={title}
+                    createdBy={createdBy}
+                    createdAt={createdAt}
+                    groupId={groupId}
+                    topicId={topicId}
+                    id={_id}
+                  />
+                </div>
+              ) : null}
             </div>
           </Paper>
+          {allComment.length === 0 ? null : <Divider />}
           {allComment &&
             allComment.map((item, index) => {
               const {
                 countLike,
                 createdBy,
-                updatedBy,
+                isUpdated,
                 _id,
                 description,
                 createdAt,
@@ -207,7 +244,7 @@ function Post(props) {
                     .slice(0, 5)
                     .join(' ')}
                   createdBy={createdBy}
-                  updated={updatedBy}
+                  updated={isUpdated}
                   groupId={groupId}
                   topicId={topicId}
                   id={_id}
@@ -217,6 +254,7 @@ function Post(props) {
                 />
               );
             })}
+          <CommentSubmit groupId={groupId} topicId={topicId} postId={postId} />
         </Grid>
         <Grid item xs={3}></Grid>
       </Grid>
@@ -224,19 +262,20 @@ function Post(props) {
   );
 }
 
-const mapStateToProps = ({ post, comment, allComment }) => ({
+const mapStateToProps = ({ post, allComment, getGroup, getTopic }) => ({
   post,
-  comment,
   allComment,
+  getGroup,
+  getTopic,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getPost: (groupId, topicId, postId) =>
     dispatch(getPost(groupId, topicId, postId)),
-  commentRequest: (groupId, topicId, postId, description) =>
-    dispatch(commentRequest(groupId, topicId, postId, description)),
   getAllCommentRequest: (groupId, topicId, postId) =>
     dispatch(getAllCommentRequest(groupId, topicId, postId)),
+  getGroupRequest: (id) => dispatch(getGroupRequest(id)),
+  requestTopic: (groupId, id) => dispatch(requestTopic(groupId, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

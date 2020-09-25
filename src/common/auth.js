@@ -16,11 +16,28 @@ function getUserRole() {
   return JSON.parse(localStorage.getItem('role'));
 }
 
-function setAuthToken({ accessToken, refreshToken, userId, role }) {
+function getLikePost() {
+  return JSON.parse(localStorage.getItem('likePost'));
+}
+
+function getLikeCommentPost() {
+  return JSON.parse(localStorage.getItem('likeCommentPost'));
+}
+
+function setAuthToken({
+  accessToken,
+  refreshToken,
+  userId,
+  role,
+  likePost,
+  likeCommentPost,
+}) {
   localStorage.setItem('accessToken', JSON.stringify(accessToken));
   localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
   localStorage.setItem('userId', JSON.stringify(userId));
   localStorage.setItem('role', JSON.stringify(role));
+  localStorage.setItem('likePost', JSON.stringify(likePost));
+  localStorage.setItem('likeCommentPost', JSON.stringify(likeCommentPost));
 }
 
 function setNewAuth({ accessToken, refreshTokenFromClient }) {
@@ -33,6 +50,8 @@ function removeAuthToken() {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('role');
+  localStorage.removeItem('likePost');
+  localStorage.removeItem('likeCommentPost');
 }
 
 function refreshNewToken() {
@@ -43,6 +62,8 @@ function refreshNewToken() {
 }
 
 export {
+  getLikePost,
+  getLikeCommentPost,
   getUserRole,
   setNewAuth,
   getRefreshToken,

@@ -24,11 +24,19 @@ import deleteTopicSaga from './deleteTopicSaga';
 import updateTopicSaga from './updateTopicSaga';
 import deletePostSaga from './deletePostSaga';
 import updatePostSaga from './updatePostSaga';
+import getGroupSaga from './getGroupSaga';
+import getTopicSaga from './getTopicSaga';
+import submitLikePostSaga from './submitLikePostSaga';
+import submitUnlikePostSga from './submitUnlikePostSaga';
 
 import { all, fork } from 'redux-saga/effects';
 
 function* rootSaga() {
   yield all([
+    fork(submitUnlikePostSga),
+    fork(submitLikePostSaga),
+    fork(getTopicSaga),
+    fork(getGroupSaga),
     fork(deleteTopicSaga),
     fork(updateTopicSaga),
     fork(deletePostSaga),

@@ -13,6 +13,7 @@ import {
   COMMENT_REQUEST,
   SUBMIT_POST,
   SUBMIT_LIKE,
+  GET_GROUP,
   SUBMIT_TOPIC,
   SUBMIT_GROUP,
   GET_USER_LIST,
@@ -27,6 +28,8 @@ import {
   UPDATE_TOPIC,
   DELETE_POST,
   UPDATE_POST,
+  REQUEST_TOPIC,
+  SUBMIT_UNLIKE,
 } from '../constants';
 
 const loadId = (email, password) => ({
@@ -508,7 +511,94 @@ const deletePostClear = () => ({
   type: DELETE_POST.DELETE_POST_CLEAR,
 });
 
+const getGroupRequest = (id) => ({
+  type: GET_GROUP.REQUEST_GROUP,
+  id,
+});
+
+const getGroupSuccess = (data) => ({
+  type: GET_GROUP.SUCCESS_GROUP,
+  data,
+});
+
+const getGroupFailed = (data) => ({
+  type: GET_GROUP.FAILED_GROUP,
+  data,
+});
+
+const requestTopic = (groupId, id) => ({
+  type: REQUEST_TOPIC.LOAD_TOPIC,
+  groupId,
+  id,
+});
+
+const requestTopicSuccess = (data) => ({
+  type: REQUEST_TOPIC.TOPIC_SUCCESS,
+  data,
+});
+
+const requestTopicFailed = (data) => ({
+  type: REQUEST_TOPIC.FAILED_TOPIC,
+  data,
+});
+
+const requestSubmitLike = (groupId, topicId, postId) => ({
+  type: SUBMIT_LIKE.SUBMIT_LIKE_REQUEST,
+  groupId,
+  topicId,
+  postId,
+});
+
+const successSubmitLike = (data) => ({
+  type: SUBMIT_LIKE.SUBMIT_LIKE_SUCCESS,
+  data,
+});
+
+const failedSubmitLike = (data) => ({
+  type: SUBMIT_LIKE.SUBMIT_LIKE_FAILED,
+  data,
+});
+
+const clearSubmitLike = () => ({
+  type: SUBMIT_LIKE.SUBMIT_LIKE_CLEAR,
+});
+
+const requestUnlikePost = (groupId, topicId, postId) => ({
+  type: SUBMIT_UNLIKE.SUBMIT_UNLIKE_REQUEST,
+  groupId,
+  topicId,
+  postId,
+});
+
+const successUnlikePost = (data) => ({
+  type: SUBMIT_UNLIKE.SUBMIT_UNLIKE_SUCCESS,
+  data,
+});
+
+const failedUnlikePost = (data) => ({
+  type: SUBMIT_UNLIKE.SUBMIT_UNLIKE_FAILED,
+  data,
+});
+
+const clearUnlikePost = () => ({
+  type: SUBMIT_UNLIKE.SUBMIT_UNLIKE_CLEAR,
+});
+
 export {
+  clearSubmitLike,
+  clearUnlikePost,
+  requestUnlikePost,
+  successUnlikePost,
+  failedUnlikePost,
+  requestSubmitLike,
+  successSubmitLike,
+  failedSubmitLike,
+  requestTopic,
+  requestTopicFailed,
+  requestTopicSuccess,
+  getGroupFailed,
+  getGroupRequest,
+  getGroupSuccess,
   updatePostClear,
   updatePostSuccess,
   updatePostRequest,

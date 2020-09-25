@@ -3,7 +3,7 @@ import AppBar from './components/NavBar/AppBar';
 import './App.css';
 
 import { Route, Switch } from 'react-router-dom';
-import { makeStyles, StylesProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Vforum from './containers/VforumPage/Vforum';
 import Vmemory from './containers/VmemoryPage/Vmemory';
@@ -28,41 +28,39 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-      <StylesProvider injectFirst>
-        <GlobalLoading />
-        <AppBar />
-        <PopoverMessage />
-        <Switch>
-          <PrivateRoute exact path='/' component={Homescreen} />
-          <PrivateRoute path='/vforum' exact component={Vforum} />
-          <Route path='/login' component={LoginForm} />
-          <Route path='/register' component={Register} />
-          <PrivateRoute path='/event' component={EventPage} />
-          <PrivateRoute path='/settings' component={Settings} />
-          <PrivateRoute path='/userlist' component={UserList} />
-          <PrivateRoute path='/grouplist' component={GroupList} />
-          <PrivateRoute
-            path='/vforum/group/:id/topiclist'
-            component={TopicListMod}
-          />
-          <PrivateRoute
-            path='/vforum/group/:id/topic'
-            exact
-            component={TopicList}
-          />
-          <PrivateRoute
-            exact
-            path='/vforum/group/:groupId/topic/:topicId/post'
-            component={PostsList}
-          />
-          <PrivateRoute
-            exact
-            path='/vforum/group/:groupId/topic/:topicId/post/:postId'
-            component={Post}
-          />
-          <PrivateRoute path='/vmemory' component={Vmemory} />
-        </Switch>
-      </StylesProvider>
+      <GlobalLoading />
+      <AppBar />
+      <PopoverMessage />
+      <Switch>
+        <PrivateRoute exact path='/' component={Homescreen} />
+        <PrivateRoute path='/vforum' exact component={Vforum} />
+        <Route path='/login' component={LoginForm} />
+        <Route path='/register' component={Register} />
+        <PrivateRoute path='/event' component={EventPage} />
+        <PrivateRoute path='/settings' component={Settings} />
+        <PrivateRoute path='/userlist' component={UserList} />
+        <PrivateRoute path='/grouplist' component={GroupList} />
+        <PrivateRoute
+          path='/vforum/group/:id/topiclist'
+          component={TopicListMod}
+        />
+        <PrivateRoute
+          path='/vforum/group/:id/topic'
+          exact
+          component={TopicList}
+        />
+        <PrivateRoute
+          exact
+          path='/vforum/group/:groupId/topic/:topicId/post'
+          component={PostsList}
+        />
+        <PrivateRoute
+          exact
+          path='/vforum/group/:groupId/topic/:topicId/post/:postId'
+          component={Post}
+        />
+        <PrivateRoute path='/vmemory' component={Vmemory} />
+      </Switch>
     </div>
   );
 }

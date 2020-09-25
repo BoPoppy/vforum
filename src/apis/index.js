@@ -34,6 +34,10 @@ const getGroupList = () => {
   return axiosService.get(`${REACT_APP_API_URL}/v1/api/group`);
 };
 
+const getGroup = (id) => {
+  return axiosService.get(`${REACT_APP_API_URL}/v1/api/group/${id}`);
+};
+
 const getTopicList = (id) => {
   return axiosService.get(`${REACT_APP_API_URL}/v1/api/group/${id}/topic`);
 };
@@ -47,6 +51,12 @@ const getPostList = (groupId, topicId) => {
 const getPost = (groupId, topicId, postId) => {
   return axiosService.get(
     `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}`
+  );
+};
+
+const getTopic = (groupId, id) => {
+  return axiosService.get(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${id}`
   );
 };
 
@@ -147,7 +157,23 @@ const updatePost = (groupId, topicId, id, data) => {
   );
 };
 
+const submitLikePost = (groupId, topicId, postId) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/addlike`
+  );
+};
+
+const submitUnlikePost = (groupId, topicId, postId) => {
+  return axiosService.patch(
+    `${REACT_APP_API_URL}/v1/api/group/${groupId}/topic/${topicId}/post/${postId}/minuslike`
+  );
+};
+
 export {
+  submitUnlikePost,
+  submitLikePost,
+  getTopic,
+  getGroup,
   deleteTopic,
   updateTopic,
   deletePost,

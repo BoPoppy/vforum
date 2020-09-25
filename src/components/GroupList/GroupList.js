@@ -1,19 +1,60 @@
 import React from 'react';
-import { Grid, Divider, makeStyles } from '@material-ui/core';
-import ForumIcon from '@material-ui/icons/Forum';
+import { Grid, Divider, makeStyles, Typography } from '@material-ui/core';
+import ToysIcon from '@material-ui/icons/Toys';
 import { NavLink } from 'react-router-dom';
-import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     display: 'flex',
+    padding: 0,
   },
   icon: {
-    fontSize: 40,
-
+    color: '#005673',
+    fontSize: 45,
     [theme.breakpoints.down('md')]: {
-      fontSize: 30,
+      fontSize: 40,
     },
+
+    paddingRight: theme.spacing(1),
+  },
+  topicTitle: {
+    color: '#005673',
+    fontSize: 14,
+    fontWeight: 700,
+    '&:hover, &:focus': {
+      color: '#005673',
+    },
+    textTransform: 'capitalize',
+  },
+  topicDes: {
+    fontSize: 13,
+    fontStyle: 'italic',
+    fontWeight: 520,
+  },
+  alert: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '250px',
+  },
+  createdBy: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    fontSize: 13,
+  },
+  createdBy1: {
+    fontSize: 13,
+    fontWeight: 550,
+    fontStyle: 'italic',
+  },
+  createdAt: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    fontSize: 13,
+  },
+  createdAt1: {
+    fontSize: 13,
+    fontWeight: 550,
+    fontStyle: 'italic',
   },
 }));
 
@@ -23,37 +64,45 @@ function GroupList(props) {
 
   return (
     <div>
-      <Grid
-        container
-        direction='row'
-        justify='center'
-        alignItems='center'
-        spacing={2}
-      >
+      <Grid container direction='row' justify='center' alignItems='center'>
         <Grid item xs={8} className={classes.title}>
-          <ForumIcon className={classes.icon} />
+          <ToysIcon className={classes.icon} />
           <div>
             <NavLink
               to={`/vforum/group/${groupId}/topic/${topicId}/post`}
-              style={{ marginBottom: '0' }}
+              className={classes.topicTitle}
             >
               {name}
             </NavLink>
 
-            <p style={{ marginBottom: '0' }}>{description}</p>
+            <Typography className={classes.topicDes}>{description}</Typography>
           </div>
         </Grid>
-        <Grid item xs={4}>
-          <Alert icon={false} severity='warning'>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <p style={{ paddingRight: '4px', marginBottom: '0' }}>
-                Created By: {createdBy}
-              </p>
-              <p style={{ paddingRight: '4px', marginBottom: '0' }}>
-                Created At: {createdAt}
-              </p>
-            </div>
-          </Alert>
+        <Grid className={classes.alert}>
+          <div
+            style={{
+              display: 'flex',
+              paddingTop: '1px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography className={classes.createdBy}>
+              Created By:&nbsp;
+            </Typography>
+            <Typography className={classes.createdBy1}>{createdBy}</Typography>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              paddingTop: '2px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography className={classes.createdAt}>
+              Created At:&nbsp;
+            </Typography>
+            <Typography className={classes.createdAt1}>{createdAt}</Typography>
+          </div>
         </Grid>
       </Grid>
       <Divider variant='middle' />

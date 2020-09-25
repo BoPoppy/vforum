@@ -27,6 +27,10 @@ import updateTopic from './updateTopicReducer';
 import deleteTopic from './deleteTopicReducer';
 import updatePost from './updatePostReducer';
 import deletePost from './deletePostReducer';
+import getGroup from './getGroupReducer';
+import getTopic from './getTopicReducer';
+import submitLikePost from './submitLikeReducer';
+import submitUnlikePost from './submitUnlikeReducer';
 
 const rootReducer = combineReducers({
   registerReducer,
@@ -57,6 +61,10 @@ const rootReducer = combineReducers({
   updateTopic: updateTopic,
   deletePost: deletePost,
   updatePost: updatePost,
+  getGroup: getGroup,
+  getTopic: getTopic,
+  submitLikePost: submitLikePost,
+  submitUnlikePost: submitUnlikePost,
 });
 
 export default rootReducer;

@@ -29,6 +29,8 @@ function* callSubmit({ email, password }) {
       refreshToken: data.result.refreshToken,
       userId: data.result.userId,
       role: data.result.role,
+      likePost: data.result.likePost,
+      likeCommentPost: data.result.likeCommentPost,
     });
     yield put(setId());
     yield history.push('/vforum');
